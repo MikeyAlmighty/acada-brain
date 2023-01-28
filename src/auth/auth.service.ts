@@ -4,7 +4,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { AuthDto, SignInAuthDto } from './dto';
 
 const ERROR_PRISMA_UNIQUE_FIELD_CONSTRAINT = 'P2002';
