@@ -1,0 +1,21 @@
+# POST SignUp
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+{
+ "email": "ryan_reynolds@2gmail.com",
+ "firstName": "Ryan",
+ "lastName": "Reynolds",
+ "password": "Chimichangas"
+}
+
+# POST SignIn
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+{
+ "email": "ryan_reynolds@1gmail.com",
+ "password": "Chimichangas"
+}
+
+# GET me
+GET http://localhost:8080/users/me
+Authorization: Bearer ...
