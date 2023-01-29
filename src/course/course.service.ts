@@ -31,7 +31,7 @@ export class CourseService {
     return course;
   }
 
-  async editCourse() {}
+  // async editCourse() {}
 
-  async deleteCourse() {}
+  // async deleteCourse() {}
 }
