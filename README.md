@@ -1,6 +1,6 @@
 ## AcadaBrain
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+> Your one stop shop for knowledge enrichment
 
 ![Logo](./assets/acada-brain-logo.svg)
 
@@ -9,6 +9,19 @@
 ```bash
 $ npm install
 ```
+
+### Architecture
+
+- [Nest](https://github.com/nestjs/nest).
+- [TypeScript](https://www.typescriptlang.org/).
+- [PostgreSQL](https://www.postgresql.org/).
+- [Docker Compose](https://docs.docker.com/engine/reference/commandline/compose/).
+
+pre-commit/push hooks setup with [Husky](https://github.com/typicode/husky)
+
+#### Authentication
+
+[Passport.js](https://www.passportjs.org/) is used along with [passport-jwt](http://www.passportjs.org/packages/passport-jwt/) strategy for handling user authentication.
 
 ## Running the app
 
@@ -25,27 +38,24 @@ $ npm run start:prod
 
 ## Test
 
-```bash
-# unit tests
-$ npm run test
+### End-to-End Testing
 
+End-to-End Testing via [Pactum.js](https://pactumjs.github.io/)
+(See [E2E Tests](app.e2e-spec.ts))
+
+Tests are ran against a test DB (spun up in a separate docker container).
+
+```bash
 # e2e tests
 $ npm run test:e2e
+
+# unit tests
+$ npm run test
 
 # test coverage
 $ npm run test:cov
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
 ## License
 
-Nest is [MIT licensed](LICENSE).
+[MIT licensed](LICENSE).
