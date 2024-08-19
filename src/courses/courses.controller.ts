@@ -8,15 +8,20 @@ import {
   Param,
   ParseIntPipe,
   HttpStatus,
+  Inject,
 } from "@nestjs/common";
 import { CoursesService } from "./courses.service";
 import { CreateCourseDTO } from "./dto/create-course-dto";
+import { Connection } from "common/constants/connection";
 
 @Controller({
   path: "courses",
 })
 export class CoursesController {
-  constructor(private courseService: CoursesService) {}
+  constructor(
+    private courseService: CoursesService,
+    @Inject("CONNECTION") private connection: Connection,
+  ) {}
   @Post()
   create(@Body() createCourseDto: CreateCourseDTO) {
     return this.courseService.create(createCourseDto);
