@@ -7,12 +7,14 @@ import { DevConfigService } from "common/providers/DevConfigService";
 import { LessonsController } from './lessons/lessons.controller';
 import { LessonsService } from './lessons/lessons.service';
 import { LessonsModule } from './lessons/lessons.module';
+import { UsersModule } from './users/users.module';
+import { QuestionsModule } from './questions/questions.module';
 
 const devConfig = { port: 3000 };
 const prodConfig = { port: 4000 };
 
 @Module({
-  imports: [CoursesModule, LessonsModule],
+  imports: [CoursesModule, LessonsModule, UsersModule, QuestionsModule],
   controllers: [AppController, LessonsController],
   providers: [
     AppService,
