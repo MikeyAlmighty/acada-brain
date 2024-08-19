@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class LessonsService {
-  createById(lesson) {}
+  create(lesson) {}
   findAll() {}
   updateById() {}
-  deleteById() {}
+  remove() {}
 }
