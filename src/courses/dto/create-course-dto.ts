@@ -10,6 +10,7 @@ export class CreateCourseDTO {
   readonly description: string;
 
   @IsArray()
+  @IsString({ each: true })
   readonly lessons: string[]; // Type Lesson[]
 
   @IsDateString()

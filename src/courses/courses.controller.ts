@@ -1,8 +1,20 @@
-import { Controller, Get, Put, Post, Delete, Body } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Put,
+  Post,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+  HttpStatus,
+} from "@nestjs/common";
 import { CoursesService } from "./courses.service";
 import { CreateCourseDTO } from "./dto/create-course-dto";
 
-@Controller("courses")
+@Controller({
+  path: "courses",
+})
 export class CoursesController {
   constructor(private courseService: CoursesService) {}
   @Post()
@@ -16,8 +28,14 @@ export class CoursesController {
   }
 
   @Get(":id")
-  findById() {
-    return "Fetch CoursebyId";
+  findById(
+    @Param(
+      "id",
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return `Fetch CoursebyId ${typeof id}`;
   }
 
   @Put(":id")
