@@ -10,9 +10,10 @@ import {
   HttpStatus,
   Inject,
 } from "@nestjs/common";
-import { CoursesService } from "./courses.service";
-import { CreateCourseDTO } from "./dto/create-course-dto";
+
 import { Connection } from "common/constants/connection";
+import { CoursesService } from "./courses.service";
+import { CreateCourseDto } from "./dto/create-course.dto";
 
 @Controller({
   path: "courses",
@@ -22,8 +23,9 @@ export class CoursesController {
     private courseService: CoursesService,
     @Inject("CONNECTION") private connection: Connection,
   ) {}
+
   @Post()
-  create(@Body() createCourseDto: CreateCourseDTO) {
+  create(@Body() createCourseDto: CreateCourseDto) {
     return this.courseService.create(createCourseDto);
   }
 
