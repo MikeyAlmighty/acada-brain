@@ -4,22 +4,17 @@ import {
   Delete,
   Get,
   HttpStatus,
-  Inject,
   Param,
   ParseIntPipe,
   Post,
   Put,
 } from "@nestjs/common";
 import { LessonsService } from "./lessons.service";
-import { Connection } from "common/constants/connection";
 import { CreateLessonDto } from "./dto/create-lesson-dto";
 
 @Controller("lessons")
 export class LessonsController {
-  constructor(
-    private lessonService: LessonsService,
-    @Inject("CONNECTION") private connection: Connection,
-  ) {}
+  constructor(private lessonService: LessonsService) {}
   @Post()
   create(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonService.create(createLessonDto);

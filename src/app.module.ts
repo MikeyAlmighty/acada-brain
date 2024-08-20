@@ -15,6 +15,11 @@ import { Course } from "./courses/course.entity";
 import { Lesson } from "./lessons/lesson.entity";
 import { User } from "./users/user.entity";
 import { Question } from "./questions/question.entity";
+import { CoursesController } from "./courses/courses.controller";
+import { QuestionsController } from "./questions/questions.controller";
+import { CoursesService } from "./courses/courses.service";
+import { UsersService } from "./users/users.service";
+import { QuestionsService } from "./questions/questions.service";
 
 const devConfig = { port: 3000 };
 const prodConfig = { port: 4000 };
@@ -29,16 +34,26 @@ const prodConfig = { port: 4000 };
       type: "postgres",
       host: "172.17.0.2",
       port: 5432,
-      username: "admin",
+      username: "postgres",
       password: "admin",
-      database: "admin",
+      database: "acada-brain",
       entities: [Course, Lesson, User, Question],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([User, Course, Lesson, Question]),
   ],
-  controllers: [AppController, LessonsController],
+  controllers: [
+    AppController,
+    LessonsController,
+    CoursesController,
+    QuestionsController,
+  ],
   providers: [
     AppService,
+    CoursesService,
+    UsersService,
+    LessonsService,
+    QuestionsService,
     {
       provide: DevConfigService,
       useClass: DevConfigService,
@@ -49,7 +64,6 @@ const prodConfig = { port: 4000 };
         return process.env.NODE_ENV === "development" ? devConfig : prodConfig;
       },
     },
-    LessonsService,
   ],
 })
 export class AppModule implements NestModule {
