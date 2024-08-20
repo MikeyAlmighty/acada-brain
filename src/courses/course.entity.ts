@@ -8,7 +8,7 @@ import {
 import { Lesson } from "../lessons/lesson.entity";
 import { User } from "src/users/user.entity";
 
-@Entity("course")
+@Entity({ name: "courses" })
 export class Course {
   @PrimaryGeneratedColumn()
   id: number;
