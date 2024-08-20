@@ -19,6 +19,9 @@ export class Course {
   @Column()
   description: string;
 
+  @Column({ default: new Date() })
+  createdAt: Date;
+
   /*
    * Each Course will have multiple Lessons
    */
