@@ -14,6 +14,6 @@ export class Question {
   @Column()
   description: string;
 
-  @Column({ default: new Date() })
-  createdAt: Date;
+  @Column()
+  createdAt: number;
 }

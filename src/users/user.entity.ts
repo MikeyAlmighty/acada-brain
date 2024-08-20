@@ -16,6 +16,6 @@ export class User {
   @Column()
   phoneNumber: string;
 
-  @Column({ default: new Date() })
-  createdAt: Date;
+  @Column()
+  createdAt: number;
 }

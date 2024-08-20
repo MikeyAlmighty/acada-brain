@@ -15,8 +15,8 @@ export class Lesson {
   @Column()
   description: string;
 
-  @Column({ default: new Date() })
-  createdAt: Date;
+  @Column()
+  createdAt: number;
 
   /*
    * Each Lesson will have multiple questions
