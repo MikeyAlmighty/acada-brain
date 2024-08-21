@@ -14,10 +14,14 @@ export class UsersService {
   createUser(userDetails: CreateUserParams) {
     const newUser = this.userRepository.create({
       ...userDetails,
-      createdAt: new Date().getTime(),
+      createdAt: new Date(),
     });
 
     return this.userRepository.save(newUser);
+  }
+
+  findUserById(id: number) {
+    return this.userRepository.findBy({ id });
   }
 
   getAll() {

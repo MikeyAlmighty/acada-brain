@@ -22,8 +22,16 @@ export class UsersController {
     return this.userService.getAll();
   }
 
-  @Get()
-  findUserById() {}
+  @Get(":id")
+  findUserById(
+    @Param(
+      "id",
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return this.userService.findUserById(id);
+  }
 
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {

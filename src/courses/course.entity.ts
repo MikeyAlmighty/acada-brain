@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
@@ -19,7 +20,7 @@ export class Course {
   @Column()
   description: string;
 
-  @Column({ default: new Date() })
+  @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
 
   /*

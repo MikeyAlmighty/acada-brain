@@ -5,5 +5,5 @@ export type CreateLessonParams = {
   courseId: number;
   releaseDate: number;
   questions: any[]; // TODO: Type correctly with QuestionParams
-  createdAt: number;
+  createdAt: Date;
 };

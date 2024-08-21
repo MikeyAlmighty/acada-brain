@@ -15,7 +15,7 @@ export class CoursesService {
   create(courseDetails: CreateCourseParams) {
     const newCourse = this.courseRepository.create({
       ...courseDetails,
-      createdAt: new Date().getTime(),
+      createdAt: new Date(),
     });
     return this.courseRepository.save(newCourse);
   }

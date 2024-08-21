@@ -1,4 +1,10 @@
-import { IsString, IsNotEmpty, IsArray, IsNumber } from "class-validator";
+import {
+  IsString,
+  IsNotEmpty,
+  IsArray,
+  IsNumber,
+  IsDate,
+} from "class-validator";
 
 export class CreateLessonDto {
   @IsString()
@@ -21,7 +27,7 @@ export class CreateLessonDto {
   @IsNotEmpty()
   readonly releaseDate: number;
 
-  @IsNumber()
+  @IsDate()
   @IsNotEmpty()
-  readonly createdAt: number;
+  readonly createdAt: Date;
 }

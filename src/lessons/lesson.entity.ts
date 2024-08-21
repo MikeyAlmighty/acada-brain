@@ -1,5 +1,11 @@
 import { Question } from "src/questions/question.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity({ name: "lessons" })
 export class Lesson {
@@ -15,8 +21,8 @@ export class Lesson {
   @Column()
   description: string;
 
-  @Column()
-  createdAt: number;
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt: Date;
 
   @Column()
   releaseDate: number;
