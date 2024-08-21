@@ -13,9 +13,7 @@ import {
 import { CoursesService } from "./courses.service";
 import { CreateCourseDto } from "./dto/create-course.dto";
 
-@Controller({
-  path: "courses",
-})
+@Controller({ path: "courses" })
 export class CoursesController {
   constructor(private courseService: CoursesService) {}
 
