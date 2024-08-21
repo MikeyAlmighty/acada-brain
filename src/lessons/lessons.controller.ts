@@ -10,7 +10,7 @@ import {
   Put,
 } from "@nestjs/common";
 import { LessonsService } from "./lessons.service";
-import { CreateLessonDto } from "./dto/create-lesson-dto";
+import { CreateLessonDto } from "./dto/create-lesson.dto";
 
 @Controller("lessons")
 export class LessonsController {

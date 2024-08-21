@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsArray, IsDateString } from "class-validator";
+import { IsString, IsNotEmpty, IsArray, IsNumber } from "class-validator";
+import { Lesson } from "src/lessons/lesson.entity";
 
 export class CreateCourseDto {
   @IsString()
@@ -10,10 +11,9 @@ export class CreateCourseDto {
   readonly description: string;
 
   @IsArray()
-  @IsString({ each: true })
-  readonly lessons: string[]; // Type Lesson[]
+  readonly lessons: Lesson[];
 
-  @IsDateString()
+  @IsNumber()
   @IsNotEmpty()
-  readonly releaseDate: Date;
+  readonly releaseDate: number;
 }

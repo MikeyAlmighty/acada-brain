@@ -18,9 +18,12 @@ export class Lesson {
   @Column()
   createdAt: number;
 
+  @Column()
+  releaseDate: number;
+
   /*
    * Each Lesson will have multiple questions
    */
   @OneToMany(() => Question, (question) => question.lessonId)
-  question: Question[];
+  questions: Question[];
 }
