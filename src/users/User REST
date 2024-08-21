@@ -1,0 +1,17 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstName": "Deadpool",
+  "lastName": "Anderson",
+  "email": "neo@theone.gmail.com",
+  "phoneNumber": "0711111111"
+}
+
+###
+
+GET http://localhost:3000/users
+
+###
+
+GET http://localhost:3000/users/2
