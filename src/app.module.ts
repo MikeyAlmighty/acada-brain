@@ -32,11 +32,11 @@ const prodConfig = { port: 4000 };
     QuestionsModule,
     TypeOrmModule.forRoot({
       type: "mysql",
-      host: "172.17.0.2",
+      host: "acada-brain-db-dev",
       port: 3306,
       username: "root",
       password: "admin",
-      database: "acada_brain",
+      database: "acada_brain_dev",
       entities: [Course, Lesson, User, Question],
       synchronize: true,
     }),
