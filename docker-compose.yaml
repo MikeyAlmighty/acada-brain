@@ -1,15 +1,19 @@
+version: '3.8'
 services:
   acada-brain-api-dev:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - "3000:3000"
     environment:
       - PORT=3000
       - NODE_ENV=development
+      - DB_HOST=acada-brain-db-dev
+      - DB_PORT=3306
     volumes:
       - ./src:/usr/src/app/src
+
   acada-brain-db-dev:
     image: mysql
     ports:
@@ -18,5 +22,3 @@ services:
       - MYSQL_ROOT_PASSWORD=admin
       - MYSQL_DATABASE=acada_brain_dev
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=admin
-      - MYSQL_TCP_PORT=3307
