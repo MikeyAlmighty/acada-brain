@@ -1,5 +1,7 @@
 # AcadaBrain
 
+Yet Another Learning Platform
+
 ## Running
 
-`docker-compose -f docker-compose.yml up --build -d`
+Run: `docker-compose -f docker-compose.yaml up --build -d`
