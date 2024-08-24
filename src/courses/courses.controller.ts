@@ -19,23 +19,23 @@ export class CoursesController {
 
   @Post()
   create(@Body() createCourseDto: CreateCourseDto) {
-    return this.courseService.create(createCourseDto);
+    return this.courseService.createCourse(createCourseDto);
   }
 
   @Get()
-  findAll() {
-    return this.courseService.findAll();
+  getCourses() {
+    return this.courseService.getAll();
   }
 
   @Get(":id")
-  findById(
+  findCourseById(
     @Param(
       "id",
       new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
     id: number,
   ) {
-    return `Fetch CoursebyId ${typeof id}`;
+    return this.courseService.findCourseById(id);
   }
 
   @Put(":id")

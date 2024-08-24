@@ -1,28 +1,33 @@
-import { Injectable, Scope } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { CreateCourseParams } from "./type";
 import { Course } from "./course.entity";
 
-@Injectable({
-  scope: Scope.TRANSIENT, // TODO: Remove to revert to default?
-})
+@Injectable()
 export class CoursesService {
   constructor(
     @InjectRepository(Course) private courseRepository: Repository<Course>,
   ) {}
 
-  create(courseDetails: CreateCourseParams) {
+  createCourse(courseDetails: CreateCourseParams) {
     const newCourse = this.courseRepository.create({
       ...courseDetails,
       createdAt: new Date(),
     });
     return this.courseRepository.save(newCourse);
   }
-  findAll() {
+
+  getAll() {
     return this.courseRepository.find();
   }
+
+  findCourseById(id: number) {
+    return this.courseRepository.findBy({ id });
+  }
+
   update() {}
+
   remove() {}
 }
