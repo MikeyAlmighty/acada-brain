@@ -1,33 +1,15 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsArray,
-  IsNumber,
-  IsDate,
-} from "class-validator";
+import { IsString, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 
-export class CreateLessonDto {
+export class CreateQuestionDto {
   @IsString()
   @IsNotEmpty()
-  readonly title: string;
-
-  @IsString()
-  @IsNotEmpty()
-  readonly description: string;
+  readonly question: string;
 
   @IsNumber()
-  @IsNotEmpty()
+  @IsOptional()
   readonly lessonId: number;
 
-  @IsArray()
-  @IsString({ each: true })
-  readonly questions: string[];
-
-  @IsNumber()
-  @IsNotEmpty()
-  readonly releaseDate: number;
-
-  @IsDate()
-  @IsNotEmpty()
-  readonly createdAt: Date;
+  // @IsDate()
+  // @IsNotEmpty()
+  // readonly createdAt: Date;
 }

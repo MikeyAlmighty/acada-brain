@@ -1,8 +1,10 @@
+import { Course } from "src/courses/course.entity";
 import { Question } from "src/questions/question.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -26,6 +28,12 @@ export class Lesson {
 
   @Column()
   releaseDate: number;
+
+  /*
+   * Each Lesson will belong to one Course
+   */
+  @ManyToOne(() => Course, (course) => course.lessons)
+  course: Course;
 
   /*
    * Each Lesson will have multiple questions

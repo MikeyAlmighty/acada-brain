@@ -12,6 +12,7 @@ export class CoursesService {
   constructor(
     @InjectRepository(Course) private courseRepository: Repository<Course>,
   ) {}
+
   create(courseDetails: CreateCourseParams) {
     const newCourse = this.courseRepository.create({
       ...courseDetails,
@@ -20,7 +21,7 @@ export class CoursesService {
     return this.courseRepository.save(newCourse);
   }
   findAll() {
-    return [];
+    return this.courseRepository.find();
   }
   update() {}
   remove() {}

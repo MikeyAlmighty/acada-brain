@@ -17,7 +17,7 @@ export class LessonsController {
   constructor(private lessonService: LessonsService) {}
   @Post()
   create(@Body() createLessonDto: CreateLessonDto) {
-    return this.lessonService.create(createLessonDto);
+    return this.lessonService.createLesson(createLessonDto);
   }
 
   @Get()

@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsArray, IsNumber } from "class-validator";
+import { IsString, IsNotEmpty, IsNumber } from "class-validator";
 
 export class CreateLessonDto {
   @IsString()
@@ -12,10 +12,6 @@ export class CreateLessonDto {
   @IsString()
   @IsNotEmpty()
   readonly description: string;
-
-  @IsArray()
-  @IsString({ each: true })
-  readonly questions: string[];
 
   @IsNumber()
   @IsNotEmpty()

@@ -20,6 +20,7 @@ import { QuestionsController } from "./questions/questions.controller";
 import { CoursesService } from "./courses/courses.service";
 import { UsersService } from "./users/users.service";
 import { QuestionsService } from "./questions/questions.service";
+import { UsersController } from "./users/users.controller";
 
 const devConfig = { port: 3000 };
 const prodConfig = { port: 4000 };
@@ -68,6 +69,9 @@ const prodConfig = { port: 4000 };
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes("courses");
+    consumer.apply(LoggerMiddleware).forRoutes(UsersController);
+    consumer.apply(LoggerMiddleware).forRoutes(LessonsController);
+    consumer.apply(LoggerMiddleware).forRoutes(CoursesController);
+    consumer.apply(LoggerMiddleware).forRoutes(QuestionsController);
   }
 }

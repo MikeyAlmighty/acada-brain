@@ -1,0 +1,16 @@
+POST http://localhost:3000/courses
+Content-Type: application/json
+
+{
+  "title": "Handling Sexual Harrasment in the Workplace",
+  "description": "This course provides essential strategies and insights for creating a respectful and safe work environment.",
+  "releaseDate": 1724481657948
+}
+
+###
+
+GET http://localhost:3000/courses
+
+###
+
+GET http://localhost:3000/courses/1

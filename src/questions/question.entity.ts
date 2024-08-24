@@ -1,7 +1,10 @@
+import { Optional } from "@nestjs/common";
+import { Lesson } from "src/lessons/lesson.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 
@@ -11,14 +14,15 @@ export class Question {
   id: number;
 
   @Column()
+  question: string;
+
+  @Column()
+  @Optional()
   lessonId: number;
-
-  @Column()
-  title: string;
-
-  @Column()
-  description: string;
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
+
+  @ManyToOne(() => Lesson, (lesson) => lesson.questions)
+  lesson: Lesson;
 }

@@ -1,0 +1,13 @@
+POST http://localhost:3000/lessons
+Content-Type: application/json
+
+{
+  "title": "How to avoid Sexual Harassment in the workplace",
+  "courseId": 1,
+  "description": "",
+  "releaseDate": 1724481657948
+}
+
+###
+
+GET http://localhost:3000/lessons

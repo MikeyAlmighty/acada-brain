@@ -1,0 +1,14 @@
+POST http://localhost:3000/questions
+Content-Type: application/json
+
+{
+  "question": "How are you feeling today?"
+}
+
+###
+
+GET http://localhost:3000/questions
+
+###
+
+GET http://localhost:3000/questions/1
