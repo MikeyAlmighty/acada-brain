@@ -4,10 +4,14 @@ Content-Type: application/json
 {
   "title": "How to avoid Sexual Harassment in the workplace",
   "courseId": 1,
-  "description": "",
+  "description": "Description Here",
   "releaseDate": 1724481657948
 }
 
 ###
 
 GET http://localhost:3000/lessons
+
+###
+
+GET http://localhost:3000/lessons/1

@@ -9,31 +9,33 @@ import {
   Post,
   Put,
 } from "@nestjs/common";
+
 import { LessonsService } from "./lessons.service";
 import { CreateLessonDto } from "./dto/create-lesson.dto";
 
-@Controller("lessons")
+@Controller({ path: "lessons" })
 export class LessonsController {
   constructor(private lessonService: LessonsService) {}
+
   @Post()
   create(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonService.createLesson(createLessonDto);
   }
 
   @Get()
-  findAll() {
-    return this.lessonService.findAll();
+  getLessons() {
+    return this.lessonService.getAll();
   }
 
   @Get(":id")
-  findById(
+  findLessonById(
     @Param(
       "id",
       new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
     id: number,
   ) {
-    return `Fetch lessonById ${typeof id}`;
+    return this.lessonService.findLessonById(id);
   }
 
   @Put(":id")

@@ -24,7 +24,10 @@ export class CoursesService {
   }
 
   findCourseById(id: number) {
-    return this.courseRepository.findBy({ id });
+    return this.courseRepository.findOne({
+      where: { id },
+      relations: ["lessons"],
+    });
   }
 
   update() {}

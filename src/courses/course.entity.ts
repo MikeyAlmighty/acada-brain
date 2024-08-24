@@ -26,7 +26,7 @@ export class Course {
   /*
    * Each Course will have multiple Lessons
    */
-  @OneToMany(() => Lesson, (lesson) => lesson.courseId)
+  @OneToMany(() => Lesson, (lesson) => lesson.course)
   lessons: Lesson[];
 
   /*

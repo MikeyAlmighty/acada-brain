@@ -1,8 +1,8 @@
-POST http://localhost:3000/questions
+POST http://localhost:3000/questions/1
 Content-Type: application/json
 
 {
-  "question": "How are you feeling today?"
+  "question": "Are you good?"
 }
 
 ###

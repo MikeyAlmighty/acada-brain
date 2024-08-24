@@ -15,9 +15,6 @@ export class Lesson {
   id: number;
 
   @Column()
-  courseId: number;
-
-  @Column()
   title: string;
 
   @Column()
@@ -26,8 +23,8 @@ export class Lesson {
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
 
-  @Column()
-  releaseDate: number;
+  @Column({ type: "timestamp" })
+  releaseDate: Date;
 
   /*
    * Each Lesson will belong to one Course
@@ -38,6 +35,6 @@ export class Lesson {
   /*
    * Each Lesson will have multiple questions
    */
-  @OneToMany(() => Question, (question) => question.lessonId)
+  @OneToMany(() => Question, (question) => question.lesson)
   questions: Question[];
 }
