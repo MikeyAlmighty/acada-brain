@@ -31,7 +31,7 @@ export class UsersService {
       createdAt: new Date(),
     });
 
-    const savedUser = this.userRepository.save(newUser);
+    const savedUser = await this.userRepository.save(newUser);
     return plainToInstance(UserResponseDto, savedUser);
   }
 
@@ -43,7 +43,8 @@ export class UsersService {
    *
    */
   findUserById(id: number) {
-    return this.userRepository.findBy({ id });
+    const user = this.userRepository.findBy({ id });
+    return plainToInstance(UserResponseDto, user)
   }
 
   /**
@@ -53,7 +54,8 @@ export class UsersService {
    *
    */
   getAllUsers() {
-    return this.userRepository.find();
+    const users = this.userRepository.find();
+    return plainToInstance(UserResponseDto, users)
   }
 
   /**

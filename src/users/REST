@@ -15,8 +15,8 @@ GET http://localhost:3000/users
 
 ###
 
-GET http://localhost:3000/users/3
+GET http://localhost:3000/users/6
 
 ###
 
-DELETE http://localhost:3000/users/3
+DELETE http://localhost:3000/users/5
