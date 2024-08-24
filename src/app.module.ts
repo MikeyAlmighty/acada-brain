@@ -5,7 +5,6 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { CoursesModule } from "./courses/courses.module";
 import { LoggerMiddleware } from "common/middleware/logger/logger.middleware";
-import { DevConfigService } from "common/providers/DevConfigService";
 import { LessonsController } from "./lessons/lessons.controller";
 import { LessonsService } from "./lessons/lessons.service";
 import { LessonsModule } from "./lessons/lessons.module";
@@ -55,10 +54,6 @@ const prodConfig = { port: 4000 };
     UsersService,
     LessonsService,
     QuestionsService,
-    {
-      provide: DevConfigService,
-      useClass: DevConfigService,
-    },
     {
       provide: "CONFIG",
       useFactory: () => {
