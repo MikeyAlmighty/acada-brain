@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Param,
@@ -9,17 +10,22 @@ import {
   Put,
 } from "@nestjs/common";
 
-import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersService } from "./users.service";
+import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Controller({ path: "users" })
 export class UsersController {
   constructor(private userService: UsersService) {}
 
+  @Post()
+  createUser(@Body() createUserDto: CreateUserDto) {
+    return this.userService.createUser(createUserDto);
+  }
+
   @Get()
   async getUsers() {
-    return this.userService.getAll();
+    return this.userService.getAllUsers();
   }
 
   @Get(":id")
@@ -33,11 +39,6 @@ export class UsersController {
     return this.userService.findUserById(id);
   }
 
-  @Post()
-  createUser(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
-  }
-
   @Put()
   async updateUser(
     @Param(
@@ -48,5 +49,16 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     await this.userService.updateUser(id, updateUserDto);
+  }
+
+  @Delete(":id")
+  deleteUser(
+    @Param(
+      "id",
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    this.userService.deleteUser(id);
   }
 }

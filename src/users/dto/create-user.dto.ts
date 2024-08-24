@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty } from "class-validator";
+import { IsString, IsNotEmpty, IsEmail } from "class-validator";
+import { CreateDateColumn } from "typeorm";
 
 export class CreateUserDto {
   @IsString()
@@ -11,9 +12,16 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
+  readonly phoneNumber: string;
+
+  @IsEmail()
+  @IsNotEmpty()
   readonly email: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly phoneNumber: string;
+  readonly password: string;
+
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt: Date;
 }
