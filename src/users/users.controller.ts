@@ -42,7 +42,7 @@ export class UsersController {
   @Put()
   async updateUser(
     @Param(
-      ":id",
+      "id",
       new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
     id: number,
