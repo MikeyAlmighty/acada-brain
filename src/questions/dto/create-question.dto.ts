@@ -8,8 +8,4 @@ export class CreateQuestionDto {
   @IsNumber()
   @IsOptional()
   readonly lessonId: number;
-
-  // @IsDate()
-  // @IsNotEmpty()
-  // readonly createdAt: Date;
 }

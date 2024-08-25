@@ -1,4 +1,4 @@
-import { Optional } from "@nestjs/common";
+// import { Optional } from "@nestjs/common";
 import { Lesson } from "src/lessons/lesson.entity";
 import {
   Column,
@@ -16,9 +16,9 @@ export class Question {
   @Column()
   question: string;
 
-  @Column()
-  @Optional()
-  lessonId: number;
+  // @Column()
+  // @Optional()
+  // lessonId: number;
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
