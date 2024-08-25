@@ -8,12 +8,16 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Req,
+  UseGuards,
 } from "@nestjs/common";
 
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { LoginDto } from "./dto/login.dto";
+import { LocalGuard } from "./guards/local.guard";
+import { Request } from "express";
 
 @Controller({ path: "users" })
 export class UsersController {
@@ -24,7 +28,13 @@ export class UsersController {
     return this.userService.signUp(createUserDto);
   }
 
+  @Get("status")
+  status(@Req() req: Request) {
+    console.log(req);
+  }
+
   @Post("login")
+  @UseGuards(LocalGuard)
   async login(@Body() loginDto: LoginDto) {
     return await this.userService.validateUser(loginDto);
   }

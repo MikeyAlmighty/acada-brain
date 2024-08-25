@@ -31,21 +31,19 @@ export class UsersService {
    *
    */
   async validateUser(loginDetails: LoginParams) {
+    const { username, password } = loginDetails;
     const userFromDB = await this.userRepository.findOneBy({
-      id: loginDetails.id,
+      username,
     });
     if (!userFromDB) {
       throw new ForbiddenException("Credentials incorrect");
     }
-    const doesPasswordMatch = await argon.verify(
-      userFromDB.password,
-      loginDetails.password,
-    );
+    const doesPasswordMatch = await argon.verify(userFromDB.password, password);
     if (!doesPasswordMatch) {
       throw new ForbiddenException("Credentials incorrect");
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...user } = userFromDB;
+    const { password: _, ...user } = userFromDB;
     return this.jwtService.sign(user);
   }
 
@@ -55,7 +53,7 @@ export class UsersService {
    * @description
    * Creates a new user
    * - Hashes password
-   * - Returns a HTTP conflicht if emaila already exists
+   * - Returns a HTTP conflicht if username already exists
    * @param userDetails
    * @returns
    *
@@ -76,7 +74,10 @@ export class UsersService {
         const driverError = error.driverError;
 
         if (driverError && driverError.code === DUPLICATE_ENTRY) {
-          throw new HttpException("Email already exists", HttpStatus.CONFLICT);
+          throw new HttpException(
+            "Username already exists",
+            HttpStatus.CONFLICT,
+          );
         }
       }
     }

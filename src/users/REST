@@ -4,7 +4,8 @@ Content-Type: application/json
 {
   "firstName": "Deadpool",
   "lastName": "Anderson",
-  "email": "neo@theone5.gmail.com",
+  "username": "Theshy",
+  "email": "neo@theone8.gmail.com",
   "password": "admin",
   "phoneNumber": "0711111111"
 }
@@ -15,7 +16,7 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-  "id": 34,
+  "username": "Theshy",
   "password":"admin"
 }
 
