@@ -13,14 +13,20 @@ import {
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import { LoginDto } from "./dto/login.dto";
 
 @Controller({ path: "users" })
 export class UsersController {
   constructor(private userService: UsersService) {}
 
-  @Post()
-  createUser(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
+  @Post("signup")
+  signUp(@Body() createUserDto: CreateUserDto) {
+    return this.userService.signUp(createUserDto);
+  }
+
+  @Post("login")
+  async login(@Body() loginDto: LoginDto) {
+    return await this.userService.validateUser(loginDto);
   }
 
   @Get()

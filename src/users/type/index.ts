@@ -10,3 +10,8 @@ export type UpdateUserParams = {
   firstName: string;
   lastName: string;
 };
+
+export type LoginParams = {
+  id: number;
+  password: string;
+};

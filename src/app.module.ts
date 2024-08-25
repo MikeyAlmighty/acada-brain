@@ -1,10 +1,11 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule } from "@nestjs/config";
 
+import { LoggerMiddleware } from "common/middleware/logger/logger.middleware";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { CoursesModule } from "./courses/courses.module";
-import { LoggerMiddleware } from "common/middleware/logger/logger.middleware";
 import { LessonsController } from "./lessons/lessons.controller";
 import { LessonsService } from "./lessons/lessons.service";
 import { LessonsModule } from "./lessons/lessons.module";
@@ -20,6 +21,7 @@ import { CoursesService } from "./courses/courses.service";
 import { UsersService } from "./users/users.service";
 import { QuestionsService } from "./questions/questions.service";
 import { UsersController } from "./users/users.controller";
+import { AuthModule } from "./auth/auth.module";
 
 const devConfig = { port: 3000 };
 const prodConfig = { port: 4000 };
@@ -27,6 +29,9 @@ const prodConfig = { port: 4000 };
 @Module({
   imports: [
     CoursesModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     LessonsModule,
     UsersModule,
     QuestionsModule,
@@ -41,6 +46,7 @@ const prodConfig = { port: 4000 };
       synchronize: true,
     }),
     TypeOrmModule.forFeature([User, Course, Lesson, Question]),
+    AuthModule,
   ],
   controllers: [
     AppController,
