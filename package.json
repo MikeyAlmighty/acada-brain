@@ -1,11 +1,12 @@
 {
   "name": "acada-brain",
-  "version": "0.0.81",
+  "version": "0.0.82",
   "description": "Yet Another Learning Platform",
   "author": "Michael Leibbrandt",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "release": "standard-version",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -59,6 +60,7 @@
     "lint-staged": "^15.2.9",
     "prettier": "^3.0.0",
     "source-map-support": "^0.5.21",
+    "standard-version": "^9.5.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
