@@ -21,7 +21,6 @@ import { CoursesService } from "./courses/courses.service";
 import { UsersService } from "./users/users.service";
 import { QuestionsService } from "./questions/questions.service";
 import { UsersController } from "./users/users.controller";
-import { AuthModule } from "./auth/auth.module";
 
 const devConfig = { port: 3000 };
 const prodConfig = { port: 4000 };
@@ -45,8 +44,7 @@ const prodConfig = { port: 4000 };
       entities: [Course, Lesson, User, Question],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User, Course, Lesson, Question]),
-    AuthModule,
+    TypeOrmModule.forFeature([User, Course, Lesson, Question])
   ],
   controllers: [
     AppController,
