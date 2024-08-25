@@ -44,7 +44,7 @@ const prodConfig = { port: 4000 };
       entities: [Course, Lesson, User, Question],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User, Course, Lesson, Question])
+    TypeOrmModule.forFeature([User, Course, Lesson, Question]),
   ],
   controllers: [
     AppController,
