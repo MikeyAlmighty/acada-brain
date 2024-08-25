@@ -5,7 +5,7 @@ Content-Type: application/json
   "firstName": "Deadpool",
   "lastName": "Anderson",
   "username": "Theshy",
-  "email": "neo@theone8.gmail.com",
+  "email": "neo@theone.gmail.com",
   "password": "admin",
   "phoneNumber": "0711111111"
 }
@@ -20,6 +20,8 @@ Content-Type: application/json
   "password":"admin"
 }
 
+###
+GET http://localhost:3000/users/status
 ###
 
 GET http://localhost:3000/users

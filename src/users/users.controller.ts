@@ -16,7 +16,6 @@ import { Request } from "express";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { LoginDto } from "./dto/login.dto";
 import { LocalGuard } from "src/auth/guards/local.guard";
 
 @Controller({ path: "users" })
@@ -28,15 +27,10 @@ export class UsersController {
     return this.userService.signUp(createUserDto);
   }
 
-  @Get("status")
-  status(@Req() req: Request) {
-    console.log(req);
-  }
-
   @Post("login")
   @UseGuards(LocalGuard)
-  async login(@Body() loginDto: LoginDto) {
-    return await this.userService.validateUser(loginDto);
+  async login(@Req() req: Request) {
+    return req.user;
   }
 
   @Get()

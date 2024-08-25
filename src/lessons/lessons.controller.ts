@@ -8,8 +8,10 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 
+import { JwtAuthGuard } from "src/auth/guards/jwt.guard";
 import { LessonsService } from "./lessons.service";
 import { CreateLessonDto } from "./dto/create-lesson.dto";
 
@@ -23,11 +25,13 @@ export class LessonsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   getLessons() {
     return this.lessonService.getAll();
   }
 
   @Get(":id")
+  @UseGuards(JwtAuthGuard)
   findLessonById(
     @Param(
       "id",
@@ -39,11 +43,13 @@ export class LessonsController {
   }
 
   @Put(":id")
+  @UseGuards(JwtAuthGuard)
   updateById() {
     return "Update lessonById";
   }
 
   @Delete(":id")
+  @UseGuards(JwtAuthGuard)
   deleteById() {
     return "Delete lessonById";
   }
