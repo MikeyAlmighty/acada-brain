@@ -22,7 +22,7 @@ import { UsersService } from "./users/users.service";
 import { QuestionsService } from "./questions/questions.service";
 import { UsersController } from "./users/users.controller";
 
-const devConfig = { port: 3000 };
+const devConfig = { port: 3001 };
 const prodConfig = { port: 4000 };
 
 @Module({

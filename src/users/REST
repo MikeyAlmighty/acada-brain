@@ -1,4 +1,4 @@
-POST http://localhost:3000/users/signup
+POST http://localhost:3001/users/signup
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/users/login
+POST http://localhost:3001/users/login
 Content-Type: application/json
 
 {
@@ -21,15 +21,18 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/users/status
-###
-
-GET http://localhost:3000/users
+GET http://localhost:3001/users/status
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMsImZpcnN0TmFtZSI6IkRlYWRwb29sIiwibGFzdE5hbWUiOiJBbmRlcnNvbiIsInVzZXJuYW1lIjoiVGhlc2h5IiwiZW1haWwiOiJuZW9AdGhlb25lLmdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcxMTExMTExMSIsImNyZWF0ZWRBdCI6IjIwMjQtMDgtMjVUMTE6NDA6NDEuOTc1WiIsImlhdCI6MTcyNTE0ODE1NCwiZXhwIjoxNzI1MTUxNzU0fQ.fMG_wKFmb65wSNE8dq-AC4Q0ZdrBCuQJv2orQShQBTw
 
 ###
 
-GET http://localhost:3000/users/6
+GET http://localhost:3001/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMsImZpcnN0TmFtZSI6IkRlYWRwb29sIiwibGFzdE5hbWUiOiJBbmRlcnNvbiIsInVzZXJuYW1lIjoiVGhlc2h5IiwiZW1haWwiOiJuZW9AdGhlb25lLmdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcxMTExMTExMSIsImNyZWF0ZWRBdCI6IjIwMjQtMDgtMjVUMTE6NDA6NDEuOTc1WiIsImlhdCI6MTcyNTE0ODE1NCwiZXhwIjoxNzI1MTUxNzU0fQ.fMG_wKFmb65wSNE8dq-AC4Q0ZdrBCuQJv2orQShQBTw
 
 ###
 
-DELETE http://localhost:3000/users/5
+GET http://localhost:3001/users/6
+
+###
+
+DELETE http://localhost:3001/users/5

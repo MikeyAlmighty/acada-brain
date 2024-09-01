@@ -1,4 +1,4 @@
-POST http://localhost:3000/lessons
+POST http://localhost:3001/lessons
 Content-Type: application/json
 
 {
@@ -10,10 +10,10 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/lessons
+GET http://localhost:3001/lessons
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMsImZpcnN0TmFtZSI6IkRlYWRwb29sIiwibGFzdE5hbWUiOiJBbmRlcnNvbiIsInVzZXJuYW1lIjoiVGhlc2h5IiwiZW1haWwiOiJuZW9AdGhlb25lLmdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcxMTExMTExMSIsImNyZWF0ZWRBdCI6IjIwMjQtMDgtMjVUMTE6NDA6NDEuOTc1WiIsImlhdCI6MTcyNDU4NzQwNSwiZXhwIjoxNzI0NTkxMDA1fQ.zRjMG3AzbNRN-WI1xdPvO-pZmbwWSxPHigRkco_KYAk
 
 ###
 
-GET http://localhost:3000/lessons/1
+GET http://localhost:3001/lessons/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDMsImZpcnN0TmFtZSI6IkRlYWRwb29sIiwibGFzdE5hbWUiOiJBbmRlcnNvbiIsInVzZXJuYW1lIjoiVGhlc2h5IiwiZW1haWwiOiJuZW9AdGhlb25lLmdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcxMTExMTExMSIsImNyZWF0ZWRBdCI6IjIwMjQtMDgtMjVUMTE6NDA6NDEuOTc1WiIsImlhdCI6MTcyNDU4NzQwNSwiZXhwIjoxNzI0NTkxMDA1fQ.zRjMG3AzbNRN-WI1xdPvO-pZmbwWSxPHigRkco_KYAk
