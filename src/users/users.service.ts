@@ -44,7 +44,11 @@ export class UsersService {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...user } = userFromDB;
-    return this.jwtService.sign(user);
+    return {
+      accessToken: this.jwtService.sign(user),
+      ...user,
+      name: user.username,
+    };
   }
 
   /**
