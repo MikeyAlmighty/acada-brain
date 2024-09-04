@@ -21,6 +21,9 @@ import { CoursesService } from "./courses/courses.service";
 import { UsersService } from "./users/users.service";
 import { QuestionsService } from "./questions/questions.service";
 import { UsersController } from "./users/users.controller";
+import { ContentService } from './content/content.service';
+import { ContentController } from './content/content.controller';
+import { ContentModule } from './content/content.module';
 
 const devConfig = { port: 3001 };
 const prodConfig = { port: 4000 };
@@ -45,12 +48,14 @@ const prodConfig = { port: 4000 };
       synchronize: true,
     }),
     TypeOrmModule.forFeature([User, Course, Lesson, Question]),
+    ContentModule,
   ],
   controllers: [
     AppController,
     LessonsController,
     CoursesController,
     QuestionsController,
+    ContentController,
   ],
   providers: [
     AppService,
@@ -64,6 +69,7 @@ const prodConfig = { port: 4000 };
         return process.env.NODE_ENV === "development" ? devConfig : prodConfig;
       },
     },
+    ContentService,
   ],
 })
 export class AppModule implements NestModule {
