@@ -38,4 +38,8 @@ export class QuestionsService {
   findAll() {
     return this.questionRepository.find();
   }
+
+  deleteQuestion(id: number) {
+    return this.questionRepository.delete({ id });
+  }
 }

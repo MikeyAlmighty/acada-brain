@@ -36,7 +36,7 @@ export class User {
   createdAt: Date;
 
   /*
-   * Each Lesson will have multiple users
+   * Each Lesson can have multiple users
    */
   @OneToMany(() => Lesson, (lesson) => lesson.user)
   lessons: Lesson[];

@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -26,10 +27,11 @@ export class Lesson {
   @Column({ type: "timestamp" })
   releaseDate: Date;
 
-  /*
-   * Many Lessons can belong to a single User
-   */
-  @ManyToOne(() => User, (user) => user.id)
+  @Column()
+  userId: number;
+
+  @ManyToOne(() => User, (user) => user.lessons, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "userId" })
   user: User;
 
   /*

@@ -50,7 +50,13 @@ export class LessonsController {
 
   @Delete(":id")
   @UseGuards(JwtAuthGuard)
-  deleteById() {
-    return "Delete lessonById";
+  deleteUser(
+    @Param(
+      "id",
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    this.lessonService.deleteLesson(id);
   }
 }

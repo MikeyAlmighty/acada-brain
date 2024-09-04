@@ -36,5 +36,15 @@ export class LessonsService {
 
   updateById() {}
 
-  remove() {}
+  /**
+   * deleteLesson
+   *
+   * @description
+   * Deletes a lesson
+   * @param id
+   *
+   */
+  deleteLesson(id: number) {
+    return this.lessonRepository.delete({ id });
+  }
 }

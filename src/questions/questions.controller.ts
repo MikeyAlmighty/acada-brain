@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Post,
@@ -29,5 +31,17 @@ export class QuestionsController {
   @UseGuards(JwtAuthGuard)
   findAll() {
     return this.questionService.findAll();
+  }
+
+  @Delete(":id")
+  @UseGuards(JwtAuthGuard)
+  deleteUser(
+    @Param(
+      "id",
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    this.questionService.deleteQuestion(id);
   }
 }

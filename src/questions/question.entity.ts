@@ -16,10 +16,6 @@ export class Question {
   @Column()
   question: string;
 
-  // @Column()
-  // @Optional()
-  // lessonId: number;
-
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
 
