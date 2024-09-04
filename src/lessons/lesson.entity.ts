@@ -1,4 +1,4 @@
-import { Course } from "src/courses/course.entity";
+import { User } from "src/users/user.entity";
 import { Question } from "src/questions/question.entity";
 import {
   Column,
@@ -27,10 +27,10 @@ export class Lesson {
   releaseDate: Date;
 
   /*
-   * Each Lesson will belong to one Course
+   * Many Lessons can belong to a single User
    */
-  @ManyToOne(() => Course, (course) => course.lessons)
-  course: Course;
+  @ManyToOne(() => User, (user) => user.id)
+  user: User;
 
   /*
    * Each Lesson will have multiple questions

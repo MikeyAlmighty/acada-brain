@@ -1,7 +1,9 @@
+import { Lesson } from "src/lessons/lesson.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from "typeorm";
@@ -32,4 +34,10 @@ export class User {
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
+
+  /*
+   * Each Lesson will have multiple users
+   */
+  @OneToMany(() => Lesson, (lesson) => lesson.user)
+  lessons: Lesson[];
 }
