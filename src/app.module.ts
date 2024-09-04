@@ -21,9 +21,9 @@ import { CoursesService } from "./courses/courses.service";
 import { UsersService } from "./users/users.service";
 import { QuestionsService } from "./questions/questions.service";
 import { UsersController } from "./users/users.controller";
-import { ContentService } from './content/content.service';
-import { ContentController } from './content/content.controller';
-import { ContentModule } from './content/content.module';
+import { ContentService } from "./content/content.service";
+import { ContentController } from "./content/content.controller";
+import { ContentModule } from "./content/content.module";
 
 const devConfig = { port: 3001 };
 const prodConfig = { port: 4000 };
