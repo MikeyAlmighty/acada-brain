@@ -95,7 +95,7 @@ export class UsersService {
    *
    */
   findUserById(id: number) {
-    const user = this.userRepository.findBy({ id });
+    const user = this.userRepository.findOneBy({ id });
     return plainToInstance(UserResponseDto, user);
   }
 

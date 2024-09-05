@@ -52,7 +52,7 @@ export class UsersController {
     return this.userService.findUserById(id);
   }
 
-  @Put()
+  @Put(":id")
   @UseGuards(JwtAuthGuard)
   async updateUser(
     @Param(
