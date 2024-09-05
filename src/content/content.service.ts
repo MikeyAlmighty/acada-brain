@@ -1,6 +1,12 @@
-import { Injectable } from "@nestjs/common";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import {
+  PutObjectCommand,
+  GetObjectCommand,
+  S3Client,
+  GetObjectCommandOutput,
+} from "@aws-sdk/client-s3";
 import { ConfigService } from "@nestjs/config";
+import { Stream } from "stream";
 
 @Injectable()
 export class ContentService {
@@ -18,5 +24,20 @@ export class ContentService {
         Body: file,
       }),
     );
+  }
+
+  async download(key: string) {
+    try {
+      const command = new GetObjectCommand({
+        Bucket: "acadabrain-uploads",
+        Key: `${key}.png`,
+      });
+      const response: GetObjectCommandOutput =
+        await this.s3Client.send(command);
+      return response.Body as Stream;
+    } catch (error) {
+      console.error("Error downloading file from S3", error);
+      throw new InternalServerErrorException("Could not download file from S3");
+    }
   }
 }

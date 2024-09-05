@@ -13,6 +13,7 @@ import { JwtService } from "@nestjs/jwt";
 import { User } from "./user.entity";
 import { CreateUserParams, LoginParams, UpdateUserParams } from "./type";
 import { UserResponseDto } from "./dto/user-response.dto";
+
 const DUPLICATE_ENTRY = "ER_DUP_ENTRY";
 
 @Injectable()
