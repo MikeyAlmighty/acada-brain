@@ -24,6 +24,9 @@ export class User {
   username: string;
 
   @Column()
+  imgUrl: string;
+
+  @Column()
   email: string;
 
   @Column()

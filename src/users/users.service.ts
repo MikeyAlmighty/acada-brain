@@ -13,12 +13,15 @@ import { JwtService } from "@nestjs/jwt";
 import { User } from "./user.entity";
 import { CreateUserParams, LoginParams, UpdateUserParams } from "./type";
 import { UserResponseDto } from "./dto/user-response.dto";
+import { ContentService } from "src/content/content.service";
+import { MediaType } from "src/content/types";
 
 const DUPLICATE_ENTRY = "ER_DUP_ENTRY";
 
 @Injectable()
 export class UsersService {
   constructor(
+    private contentService: ContentService,
     private jwtService: JwtService,
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
@@ -95,8 +98,17 @@ export class UsersService {
    * @returns
    *
    */
-  findUserById(id: number) {
+  async findUserById(id: number) {
     const user = this.userRepository.findOneBy({ id });
+    const imgUrl = await this.contentService.getProfilePicture(
+      id.toString(),
+      MediaType.IMAGE,
+    );
+
+    if (imgUrl && !(await user).imgUrl) {
+      this.userRepository.update({ id }, { imgUrl });
+    }
+
     return plainToInstance(UserResponseDto, user);
   }
 

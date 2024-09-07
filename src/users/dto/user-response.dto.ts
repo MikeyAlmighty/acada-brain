@@ -8,6 +8,9 @@ export class UserResponseDto {
   firstName: string;
 
   @Expose()
+  imgUrl: string;
+
+  @Expose()
   email: string;
 
   @Expose()

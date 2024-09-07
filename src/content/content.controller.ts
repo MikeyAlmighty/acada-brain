@@ -1,24 +1,24 @@
 import {
-  Body,
   Controller,
+  Param,
   ParseFilePipe,
   Post,
-  Res,
   UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 
 import { ContentService } from "./content.service";
-import { Response } from "express";
+import { MediaType } from "./types";
 
 @Controller("content")
 export class ContentController {
   constructor(private readonly contentService: ContentService) {}
 
-  @Post("upload")
+  @Post("upload/:mediaType")
   @UseInterceptors(FileInterceptor("file"))
   async uploadFile(
+    @Param("mediaType") mediaType: MediaType,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -29,21 +29,6 @@ export class ContentController {
     )
     file: Express.Multer.File,
   ) {
-    await this.contentService.upload(file.originalname, file.buffer);
-  }
-
-  @Post("/download")
-  async downloadFile(@Body() data: { userId: number }, @Res() res: Response) {
-    console.log("userId: ", data);
-    const fileStream = await this.contentService.download(
-      data.userId.toString(),
-    );
-
-    res.set({
-      "Content-Type": "image/png",
-      "Content-Disposition": `attachment; filename=${data.userId}`,
-    });
-
-    fileStream.pipe(res);
+    await this.contentService.upload(mediaType, file.originalname, file.buffer);
   }
 }
