@@ -1,5 +1,7 @@
 import {
   Controller,
+  FileTypeValidator,
+  MaxFileSizeValidator,
   Param,
   ParseFilePipe,
   Post,
@@ -22,8 +24,8 @@ export class ContentController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          // new MaxFileSizeValidator({ maxSize: 1000 }),
-          // new FileTypeValidator({ fileType: 'image/jpeg' }),
+          new MaxFileSizeValidator({ maxSize: 1000 }),
+          new FileTypeValidator({ fileType: "image/png" }),
         ],
       }),
     )
