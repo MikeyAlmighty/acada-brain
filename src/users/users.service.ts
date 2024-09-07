@@ -14,7 +14,6 @@ import { User } from "./user.entity";
 import { CreateUserParams, LoginParams, UpdateUserParams } from "./type";
 import { UserResponseDto } from "./dto/user-response.dto";
 import { ContentService } from "src/content/content.service";
-import { MediaType } from "src/content/types";
 
 const DUPLICATE_ENTRY = "ER_DUP_ENTRY";
 
@@ -100,10 +99,7 @@ export class UsersService {
    */
   async findUserById(id: number) {
     const user = this.userRepository.findOneBy({ id });
-    const imgUrl = await this.contentService.getProfilePicture(
-      id.toString(),
-      MediaType.IMAGE,
-    );
+    const imgUrl = await this.contentService.getProfilePicture(id.toString());
 
     if (imgUrl && !(await user).imgUrl) {
       this.userRepository.update({ id }, { imgUrl });
