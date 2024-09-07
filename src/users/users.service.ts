@@ -60,7 +60,7 @@ export class UsersService {
    * @description
    * Creates a new user
    * - Hashes password
-   * - Returns a HTTP conflicht if username already exists
+   * - Returns a HTTP conflict if 'username' already exists
    * @param userDetails
    * @returns
    *
@@ -74,7 +74,11 @@ export class UsersService {
         createdAt: new Date(),
       });
 
-      const userFromDB = await this.userRepository.save(newUser);
+      const imgUrl = await this.contentService.getSignedImageUrl(
+        userDetails.id,
+      );
+
+      const userFromDB = await this.userRepository.save({ ...newUser, imgUrl });
       return plainToInstance(UserResponseDto, userFromDB);
     } catch (error) {
       if (error instanceof QueryFailedError) {
@@ -97,14 +101,8 @@ export class UsersService {
    * @returns
    *
    */
-  async findUserById(id: number) {
+  async findUserById(id: string) {
     const user = this.userRepository.findOneBy({ id });
-    const imgUrl = await this.contentService.getProfilePicture(id.toString());
-
-    if (imgUrl && !(await user).imgUrl) {
-      this.userRepository.update({ id }, { imgUrl });
-    }
-
     return plainToInstance(UserResponseDto, user);
   }
 
@@ -129,8 +127,9 @@ export class UsersService {
    * @returns
    *
    */
-  updateUser(id: number, updatedUserDetails: UpdateUserParams) {
-    return this.userRepository.update({ id }, { ...updatedUserDetails });
+  async updateUser(id: string, updatedUserDetails: UpdateUserParams) {
+    const imgUrl = await this.contentService.getSignedImageUrl(id);
+    return this.userRepository.update(id, { ...updatedUserDetails, imgUrl });
   }
 
   /**
@@ -141,7 +140,7 @@ export class UsersService {
    * @param id
    *
    */
-  deleteUser(id: number) {
-    return this.userRepository.delete({ id });
+  deleteUser(id: string) {
+    return this.userRepository.delete(id);
   }
 }

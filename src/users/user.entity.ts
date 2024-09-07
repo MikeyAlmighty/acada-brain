@@ -4,15 +4,15 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   Unique,
 } from "typeorm";
 
 @Entity({ name: "users" })
 @Unique(["username"])
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   firstName: string;
@@ -23,7 +23,7 @@ export class User {
   @Column()
   username: string;
 
-  @Column()
+  @Column({ nullable: true, length: 500 })
   imgUrl: string;
 
   @Column()

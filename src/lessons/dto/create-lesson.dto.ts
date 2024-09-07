@@ -5,10 +5,6 @@ export class CreateLessonDto {
   @IsNotEmpty()
   readonly title: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  readonly courseId: number;
-
   @IsString()
   @IsNotEmpty()
   readonly description: string;

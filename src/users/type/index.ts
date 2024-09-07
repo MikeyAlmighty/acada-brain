@@ -1,4 +1,5 @@
 export type CreateUserParams = {
+  id: string;
   firstName: string;
   lastName: string;
   username: string;
@@ -8,8 +9,10 @@ export type CreateUserParams = {
 };
 
 export type UpdateUserParams = {
+  id: string;
   firstName: string;
   lastName: string;
+  phoneNumber: string;
 };
 
 export type LoginParams = {

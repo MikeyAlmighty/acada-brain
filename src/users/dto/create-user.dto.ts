@@ -4,6 +4,10 @@ import { CreateDateColumn } from "typeorm";
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
+  readonly id: string;
+
+  @IsString()
+  @IsNotEmpty()
   readonly firstName: string;
 
   @IsString()
