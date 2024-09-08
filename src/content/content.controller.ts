@@ -28,7 +28,11 @@ export class ContentController {
     )
     file: Express.Multer.File,
   ) {
-    await this.contentService.upload(MediaType.IMAGE, file.originalname, file.buffer);
+    await this.contentService.upload(
+      MediaType.IMAGE,
+      file.originalname,
+      file.buffer,
+    );
   }
 
   @Post("upload/video")
@@ -44,6 +48,10 @@ export class ContentController {
     )
     file: Express.Multer.File,
   ) {
-    await this.contentService.upload(MediaType.VIDEO, file.originalname, file.buffer);
+    await this.contentService.upload(
+      MediaType.VIDEO,
+      file.originalname,
+      file.buffer,
+    );
   }
 }
