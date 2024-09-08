@@ -1,8 +1,6 @@
 import {
   Controller,
   FileTypeValidator,
-  MaxFileSizeValidator,
-  Param,
   ParseFilePipe,
   Post,
   UploadedFile,
@@ -17,20 +15,35 @@ import { MediaType } from "./types";
 export class ContentController {
   constructor(private readonly contentService: ContentService) {}
 
-  @Post("upload/:mediaType")
+  @Post("upload/image")
   @UseInterceptors(FileInterceptor("file"))
-  async uploadFile(
-    @Param("mediaType") mediaType: MediaType,
+  async uploadImage(
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 1000 }),
+          // new MaxFileSizeValidator({ maxSize: 1000 }),
           new FileTypeValidator({ fileType: "image/png" }),
         ],
       }),
     )
     file: Express.Multer.File,
   ) {
-    await this.contentService.upload(mediaType, file.originalname, file.buffer);
+    await this.contentService.upload(MediaType.IMAGE, file.originalname, file.buffer);
+  }
+
+  @Post("upload/video")
+  @UseInterceptors(FileInterceptor("file"))
+  async uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          // new MaxFileSizeValidator({ maxSize: 1000 }),
+          // new FileTypeValidator({ fileType: "image/png" }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    await this.contentService.upload(MediaType.VIDEO, file.originalname, file.buffer);
   }
 }

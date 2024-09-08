@@ -1,7 +1,7 @@
 import { IsString, IsNotEmpty, IsEmail } from "class-validator";
 import { CreateDateColumn } from "typeorm";
 
-export class CreateUserDto {
+export class CreateLecturerDto {
   @IsString()
   @IsNotEmpty()
   readonly id: string;

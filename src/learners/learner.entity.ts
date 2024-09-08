@@ -1,16 +1,14 @@
-import { Lesson } from "src/lessons/lesson.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryColumn,
   Unique,
 } from "typeorm";
 
-@Entity({ name: "users" })
+@Entity({ name: "learners" })
 @Unique(["username"])
-export class User {
+export class Learner {
   @PrimaryColumn()
   id: string;
 
@@ -35,12 +33,9 @@ export class User {
   @Column()
   phoneNumber: string;
 
+  @Column({ default: "learner" })
+  role: string;
+
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
-
-  /*
-   * Each Lesson can have multiple users
-   */
-  @OneToMany(() => Lesson, (lesson) => lesson.user)
-  lessons: Lesson[];
 }

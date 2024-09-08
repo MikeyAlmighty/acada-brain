@@ -1,11 +1,8 @@
-import { User } from "src/users/user.entity";
 import { Question } from "src/questions/question.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -26,13 +23,6 @@ export class Lesson {
 
   @Column({ type: "timestamp" })
   releaseDate: Date;
-
-  @Column()
-  userId: string;
-
-  @ManyToOne(() => User, (user) => user.lessons, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "userId" })
-  user: User;
 
   /*
    * Each Lesson will have multiple questions

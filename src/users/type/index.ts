@@ -1,3 +1,8 @@
+export type LoginParams = {
+  username: string;
+  password: string;
+};
+
 export type CreateUserParams = {
   id: string;
   firstName: string;
@@ -11,11 +16,7 @@ export type CreateUserParams = {
 export type UpdateUserParams = {
   id: string;
   firstName: string;
+  file: Buffer;
   lastName: string;
   phoneNumber: string;
-};
-
-export type LoginParams = {
-  username: string;
-  password: string;
 };
