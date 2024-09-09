@@ -1,7 +1,9 @@
+import { Lecturer } from "src/lecturers/lecturer.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryColumn,
   Unique,
 } from "typeorm";
@@ -38,4 +40,9 @@ export class Learner {
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
+
+  @ManyToOne(() => Lecturer, (lecturer) => lecturer.learners, {
+    onDelete: "CASCADE",
+  })
+  lecturer: Lecturer;
 }

@@ -1,7 +1,9 @@
+import { Learner } from "src/learners/learner.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryColumn,
   Unique,
 } from "typeorm";
@@ -38,4 +40,7 @@ export class Lecturer {
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
+
+  @OneToMany(() => Learner, (learner) => learner.lecturer)
+  learners: Learner[];
 }

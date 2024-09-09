@@ -29,6 +29,18 @@ export class LecturersController {
     return this.lecturerService.findLecturerById(id);
   }
 
+  @Get(":id/learners")
+  @UseGuards(JwtAuthGuard)
+  getLearnersByLecturerId(
+    @Param(
+      "id",
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
+    return this.lecturerService.getLearnersByLecturerId(id);
+  }
+
   @Put(":id")
   @UseGuards(JwtAuthGuard)
   async updateLecturer(

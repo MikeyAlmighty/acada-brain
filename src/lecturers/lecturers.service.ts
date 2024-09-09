@@ -3,11 +3,11 @@ import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToInstance } from "class-transformer";
 
-import { Lecturer } from "./lecturer.entity";
 import { ContentService } from "src/content/content.service";
 import { UserResponseDto } from "src/users/dto/user-response.dto";
 import { UpdateUserParams } from "src/users/type";
 import { MediaType } from "src/content/types";
+import { Lecturer } from "./lecturer.entity";
 
 @Injectable()
 export class LecturersService {
@@ -37,5 +37,12 @@ export class LecturersService {
 
   deleteLecturer(id: string) {
     return this.lecturerRepository.delete(id);
+  }
+
+  async getLearnersByLecturerId(lecturerId: string) {
+    return await this.lecturerRepository.findOne({
+      where: { id: lecturerId },
+      relations: ["learners"],
+    });
   }
 }

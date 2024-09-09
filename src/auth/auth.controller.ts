@@ -2,8 +2,8 @@ import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 
 import { CreateLearnerDto } from "src/learners/dto/create-learner.dto";
 import { CreateLecturerDto } from "src/lecturers/dto/create-lecturer.dto";
-import { LocalGuard } from "./guards/local.guard";
 import { AuthService } from "./auth.service";
+import { RolesGuard } from "./guards/role.guard";
 
 @Controller("auth")
 export class AuthController {
@@ -20,7 +20,7 @@ export class AuthController {
   }
 
   @Post("login")
-  @UseGuards(LocalGuard)
+  @UseGuards(RolesGuard)
   async login(
     @Body()
     body: {
@@ -29,9 +29,7 @@ export class AuthController {
       role: "lecturer" | "learner";
     },
   ) {
-    console.log("hit");
     const { username, password, role } = body;
-    console.log("body: ", body);
     return this.authService.login(username, password, role);
   }
 }

@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEmail } from "class-validator";
+import { IsString, IsNotEmpty, IsEmail, IsOptional } from "class-validator";
 import { CreateDateColumn } from "typeorm";
 
 export class CreateLearnerDto {
@@ -13,6 +13,10 @@ export class CreateLearnerDto {
   @IsString()
   @IsNotEmpty()
   readonly lastName: string;
+
+  @IsString()
+  @IsOptional()
+  readonly lecturerId: string;
 
   @IsString()
   @IsNotEmpty()
