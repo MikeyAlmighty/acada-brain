@@ -45,6 +45,7 @@ export class LessonsService {
             });
           }),
         );
+
         // Save answers
         const savedAnswers = await this.answerRepository.save(answerEntities);
 
@@ -62,7 +63,6 @@ export class LessonsService {
 
     // Save questions
     await this.questionRepository.save(questionEntities);
-    // Save questions
   }
 
   getAll() {
