@@ -59,7 +59,10 @@ export class LearnersService {
       id,
       updatedLearnerDetails.file,
     );
-    const imgUrl = await this.contentService.getSignedImageUrl(id);
+    const imgUrl = await this.contentService.getSignedImageUrl(
+      id,
+      MediaType.IMAGE,
+    );
     return this.learnerRepository.update(id, {
       ...updatedLearnerDetails,
       imgUrl,

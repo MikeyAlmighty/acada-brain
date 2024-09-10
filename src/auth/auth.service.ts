@@ -16,6 +16,7 @@ import { Lecturer } from "src/lecturers/lecturer.entity";
 import { plainToInstance } from "class-transformer";
 import { UserResponseDto } from "src/users/dto/user-response.dto";
 import { ContentService } from "src/content/content.service";
+import { MediaType } from "src/content/types";
 
 const DUPLICATE_ENTRY = "ER_DUP_ENTRY";
 
@@ -84,6 +85,7 @@ export class AuthService {
 
       const imgUrl = await this.contentService.getSignedImageUrl(
         lecturerDetails.id,
+        MediaType.IMAGE,
       );
 
       const userFromDB = await this.lecturerRepository.save({
@@ -117,6 +119,7 @@ export class AuthService {
 
       const imgUrl = await this.contentService.getSignedImageUrl(
         learnerDetails.id,
+        MediaType.IMAGE,
       );
 
       const userFromDB = await this.learnerRepository.save({

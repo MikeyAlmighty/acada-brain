@@ -28,7 +28,12 @@ export class LecturersService {
       id,
       updatedLecturerDetails.file,
     );
-    const imgUrl = await this.contentService.getSignedImageUrl(id);
+
+    const imgUrl = await this.contentService.getSignedImageUrl(
+      id,
+      MediaType.IMAGE,
+    );
+
     return this.lecturerRepository.update(id, {
       ...updatedLecturerDetails,
       imgUrl,

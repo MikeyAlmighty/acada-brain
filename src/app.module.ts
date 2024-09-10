@@ -8,11 +8,7 @@ import { AppService } from "./app.service";
 import { LessonsController } from "./lessons/lessons.controller";
 import { LessonsService } from "./lessons/lessons.service";
 import { LessonsModule } from "./lessons/lessons.module";
-import { QuestionsModule } from "./questions/questions.module";
 import { Lesson } from "./lessons/lesson.entity";
-import { Question } from "./questions/question.entity";
-import { QuestionsController } from "./questions/questions.controller";
-import { QuestionsService } from "./questions/questions.service";
 import { ContentService } from "./content/content.service";
 import { ContentController } from "./content/content.controller";
 import { ContentModule } from "./content/content.module";
@@ -27,6 +23,8 @@ import { LearnersController } from "./learners/learners.controller";
 import { LecturersController } from "./lecturers/lecturers.controller";
 import { RoleMiddleware } from "./middleware/role-middleware";
 import { AuthController } from "./auth/auth.controller";
+import { Question } from "./lessons/question.entity";
+import { Answer } from "./lessons/answer.entity";
 
 const devConfig = { port: 3001 };
 const prodConfig = { port: 4000 };
@@ -37,8 +35,6 @@ const prodConfig = { port: 4000 };
       isGlobal: true,
     }),
     LessonsModule,
-    Learner,
-    QuestionsModule,
     TypeOrmModule.forRoot({
       type: "mysql",
       host: "acada-brain-db-dev",
@@ -46,27 +42,21 @@ const prodConfig = { port: 4000 };
       username: "root",
       password: "admin",
       database: "acada_brain_dev",
-      entities: [Lesson, Learner, Lecturer, Question],
+      entities: [Lesson, Learner, Lecturer, Question, Answer],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Learner, Lecturer, Lesson, Question]),
+    TypeOrmModule.forFeature([Learner, Lecturer, Lesson, Question, Answer]),
     ContentModule,
     LearnersModule,
     LecturersModule,
     AuthModule,
   ],
-  controllers: [
-    AppController,
-    LessonsController,
-    QuestionsController,
-    ContentController,
-  ],
+  controllers: [AppController, LessonsController, ContentController],
   providers: [
     AppService,
     LearnersService,
     LecturersService,
     LessonsService,
-    QuestionsService,
     {
       provide: "CONFIG",
       useFactory: () => {
@@ -83,6 +73,5 @@ export class AppModule implements NestModule {
     consumer.apply(LoggerMiddleware).forRoutes(LearnersController);
     consumer.apply(LoggerMiddleware).forRoutes(LecturersController);
     consumer.apply(LoggerMiddleware).forRoutes(LessonsController);
-    consumer.apply(LoggerMiddleware).forRoutes(QuestionsController);
   }
 }

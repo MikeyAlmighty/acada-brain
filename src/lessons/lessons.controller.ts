@@ -5,7 +5,7 @@ import {
   Get,
   HttpStatus,
   Param,
-  ParseIntPipe,
+  ParseUUIDPipe,
   Post,
   Put,
   UseGuards,
@@ -35,9 +35,9 @@ export class LessonsController {
   findLessonById(
     @Param(
       "id",
-      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
-    id: number,
+    id: string,
   ) {
     return this.lessonService.findLessonById(id);
   }
@@ -53,9 +53,9 @@ export class LessonsController {
   deleteUser(
     @Param(
       "id",
-      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
-    id: number,
+    id: string,
   ) {
     this.lessonService.deleteLesson(id);
   }

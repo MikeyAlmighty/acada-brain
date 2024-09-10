@@ -1,16 +1,17 @@
-import { Question } from "src/questions/question.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from "typeorm";
+
+import { Question } from "./question.entity";
 
 @Entity({ name: "lessons" })
 export class Lesson {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   title: string;

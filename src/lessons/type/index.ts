@@ -4,5 +4,5 @@ export type CreateLessonParams = {
   description: string;
   releaseDate: number;
   questionIds: string[];
-  createdAt: Date;
+  createdAt: number;
 };

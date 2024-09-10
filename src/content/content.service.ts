@@ -37,11 +37,15 @@ export class ContentService {
     );
   }
 
-  async getSignedImageUrl(key: string): Promise<string> {
+  async getSignedImageUrl(key: string, mediaType: MediaType): Promise<string> {
     const bucketName = this.configService.get<string>("AWS_S3_BUCKET_NAME");
+    const folderLocation =
+      mediaType === MediaType.IMAGE
+        ? `profile-pictures/${key}.png`
+        : `content/${key}.mp4`;
     const command = new GetObjectCommand({
       Bucket: bucketName,
-      Key: `profile-pictures/${key}.png`,
+      Key: folderLocation,
     });
 
     try {

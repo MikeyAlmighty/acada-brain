@@ -1,17 +1,19 @@
-// import { Optional } from "@nestjs/common";
-import { Lesson } from "src/lessons/lesson.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
 } from "typeorm";
+
+import { Lesson } from "src/lessons/lesson.entity";
+import { Answer } from "./answer.entity";
 
 @Entity({ name: "questions" })
 export class Question {
   @PrimaryColumn()
-  id: number;
+  id: string;
 
   @Column()
   question: string;
@@ -21,4 +23,7 @@ export class Question {
 
   @ManyToOne(() => Lesson, (lesson) => lesson.questions)
   lesson: Lesson;
+
+  @OneToMany(() => Answer, (answer) => answer.question)
+  answers: Answer[];
 }
