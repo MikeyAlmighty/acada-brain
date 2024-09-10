@@ -20,6 +20,7 @@ export class LessonsController {
   constructor(private lessonService: LessonsService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonService.createLesson(createLessonDto);
   }
