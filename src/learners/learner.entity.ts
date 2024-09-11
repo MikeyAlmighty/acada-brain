@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   PrimaryColumn,
   Unique,
@@ -55,8 +56,6 @@ export class Learner {
    * A Learner can have Many Lessons
    *
    */
-  @ManyToOne(() => Lesson, (lesson) => lesson.learners, {
-    onDelete: "CASCADE",
-  })
-  lesson: Lesson;
+  @ManyToMany(() => Lesson, (lesson) => lesson.learners)
+  lesson: Lesson[];
 }

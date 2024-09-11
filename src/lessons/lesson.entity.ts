@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   OneToMany,
   PrimaryColumn,
 } from "typeorm";
@@ -38,6 +39,6 @@ export class Lesson {
   /*
    * Each Lesson will have multiple learners
    */
-  @OneToMany(() => Learner, (learner) => learner.lesson)
+  @ManyToMany(() => Learner, (learner) => learner.lesson)
   learners: Learner[];
 }
