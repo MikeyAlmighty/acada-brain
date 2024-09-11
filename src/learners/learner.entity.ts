@@ -1,4 +1,5 @@
 import { Lecturer } from "src/lecturers/lecturer.entity";
+import { Lesson } from "src/lessons/lesson.entity";
 import {
   Column,
   CreateDateColumn,
@@ -41,8 +42,21 @@ export class Learner {
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
 
+  /*
+   * A Learner can have Many Lecturers
+   *
+   */
   @ManyToOne(() => Lecturer, (lecturer) => lecturer.learners, {
     onDelete: "CASCADE",
   })
   lecturer: Lecturer;
+
+  /*
+   * A Learner can have Many Lessons
+   *
+   */
+  @ManyToOne(() => Lesson, (lesson) => lesson.learners, {
+    onDelete: "CASCADE",
+  })
+  lesson: Lesson;
 }

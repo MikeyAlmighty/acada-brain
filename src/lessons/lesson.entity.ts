@@ -6,6 +6,7 @@ import {
   PrimaryColumn,
 } from "typeorm";
 
+import { Learner } from "src/learners/learner.entity";
 import { Question } from "./question.entity";
 
 @Entity({ name: "lessons" })
@@ -33,4 +34,10 @@ export class Lesson {
    */
   @OneToMany(() => Question, (question) => question.lesson)
   questions: Question[];
+
+  /*
+   * Each Lesson will have multiple learners
+   */
+  @OneToMany(() => Learner, (learner) => learner.lesson)
+  learners: Learner[];
 }
