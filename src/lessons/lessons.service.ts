@@ -7,6 +7,7 @@ import { CreateLessonDto } from "./dto/create-lesson.dto";
 import { Lesson } from "./lesson.entity";
 import { Question } from "./question.entity";
 import { Answer } from "./answer.entity";
+import { EventEmitter2 } from "@nestjs/event-emitter";
 
 @Injectable()
 export class LessonsService {
@@ -17,10 +18,19 @@ export class LessonsService {
     private questionRepository: Repository<Question>,
     @InjectRepository(Answer)
     private answerRepository: Repository<Answer>,
+    private eventEmitter: EventEmitter2,
   ) {}
 
-  async createLesson(lessonDetails: CreateLessonDto) {
+  async createLesson(
+    lessonDetails: CreateLessonDto,
+    video: Express.Multer.File,
+  ) {
     const { id, questions, title, description } = lessonDetails;
+
+    this.eventEmitter.emit("user.video.upload", {
+      lessonId: id,
+      video,
+    });
 
     // Create a new Lesson
     const newLesson = this.lessonRepository.create({

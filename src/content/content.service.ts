@@ -10,6 +10,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Learner } from "src/learners/learner.entity";
 import { Repository } from "typeorm";
 import { Lecturer } from "src/lecturers/lecturer.entity";
+import { Lesson } from "src/lessons/lesson.entity";
 
 @Injectable()
 export class ContentService {
@@ -23,10 +24,37 @@ export class ContentService {
 
   constructor(
     private readonly configService: ConfigService,
-    @InjectRepository(Learner) private learnerRepository: Repository<Learner>,
+    @InjectRepository(Lesson)
+    private lessonRepository: Repository<Lesson>,
     @InjectRepository(Lecturer)
     private lecturerRepository: Repository<Lecturer>,
+    @InjectRepository(Learner)
+    private learnerRepository: Repository<Learner>,
   ) {}
+
+  @OnEvent("user.video.upload")
+  async uploadVideo(payload: { lessonId: string; video: Express.Multer.File }) {
+    const bucketName = this.configService.get<string>("AWS_S3_BUCKET_NAME");
+    const folderLocation = `content/${payload.lessonId}.mp4`;
+
+    const upload = new Upload({
+      client: this.s3Client,
+      params: {
+        Bucket: bucketName,
+        Key: folderLocation,
+        Body: payload.video.buffer,
+        ACL: "public-read",
+      },
+    });
+
+    await upload.done();
+
+    const videoUrl = await this.getSignedImageUrl(
+      payload.lessonId,
+      MediaType.VIDEO,
+    );
+    await this.lessonRepository.update(payload.lessonId, { videoUrl });
+  }
 
   @OnEvent("user.image.upload")
   async uploadUserImage(payload: {

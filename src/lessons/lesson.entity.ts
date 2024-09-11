@@ -22,6 +22,9 @@ export class Lesson {
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
 
+  @Column({ nullable: true, length: 500 })
+  videoUrl: string;
+
   @Column({ type: "timestamp" })
   releaseDate: Date;
 
