@@ -9,12 +9,15 @@ import {
   UseGuards,
   Put,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from "@nestjs/common";
 
 import { JwtAuthGuard } from "src/auth/guards/jwt.guard";
 import { LearnersService } from "./learners.service";
 import { UpdateLearnerDto } from "./dto/update-learner.dto";
 import { CreateLearnerDto } from "./dto/create-learner.dto";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller({ path: "learners" })
 export class LearnersController {
@@ -58,10 +61,16 @@ export class LearnersController {
   }
 
   @Post(":lecturerId")
+  @UseInterceptors(FileInterceptor("image"))
   async createLearner(
+    @UploadedFile() image: Express.Multer.File,
     @Body() createLearnerDto: CreateLearnerDto,
     @Param("lecturerId") lecturerId: string,
   ) {
-    return this.learnerService.createLearner(lecturerId, createLearnerDto);
+    return this.learnerService.createLearner(
+      lecturerId,
+      createLearnerDto,
+      image,
+    );
   }
 }

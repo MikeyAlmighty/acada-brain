@@ -15,8 +15,7 @@ import { Learner } from "src/learners/learner.entity";
 import { Lecturer } from "src/lecturers/lecturer.entity";
 import { plainToInstance } from "class-transformer";
 import { UserResponseDto } from "src/users/dto/user-response.dto";
-import { ContentService } from "src/content/content.service";
-import { MediaType } from "src/content/types";
+import { EventEmitter2 } from "@nestjs/event-emitter";
 
 const DUPLICATE_ENTRY = "ER_DUP_ENTRY";
 
@@ -24,11 +23,11 @@ const DUPLICATE_ENTRY = "ER_DUP_ENTRY";
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private contentService: ContentService,
     @InjectRepository(Lecturer)
     private lecturerRepository: Repository<Lecturer>,
     @InjectRepository(Learner)
     private learnerRepository: Repository<Learner>,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async validateLecturer(loginDetails: LoginParams) {
@@ -54,7 +53,6 @@ export class AuthService {
 
   async validateLearner(loginDetails: LoginParams) {
     const { username, password } = loginDetails;
-    console.log("username: ", username);
     const userFromDB = await this.learnerRepository.findOneBy({
       username,
     });
@@ -74,7 +72,10 @@ export class AuthService {
     };
   }
 
-  async signUpLecturer(lecturerDetails: CreateUserParams) {
+  async signUpLecturer(
+    lecturerDetails: CreateUserParams,
+    image: Express.Multer.File,
+  ) {
     try {
       const hash = await argon.hash(lecturerDetails.password);
       const newUser = this.lecturerRepository.create({
@@ -83,16 +84,15 @@ export class AuthService {
         createdAt: new Date(),
       });
 
-      const imgUrl = await this.contentService.getSignedImageUrl(
-        lecturerDetails.id,
-        MediaType.IMAGE,
-      );
+      const savedUser = await this.lecturerRepository.save(newUser);
 
-      const userFromDB = await this.lecturerRepository.save({
-        ...newUser,
-        imgUrl,
+      this.eventEmitter.emit("user.image.upload", {
+        userId: savedUser.id,
+        image,
+        isLecturer: true,
       });
-      return plainToInstance(UserResponseDto, userFromDB);
+
+      return plainToInstance(UserResponseDto, savedUser);
     } catch (error) {
       console.error(error);
       if (error instanceof QueryFailedError) {
@@ -108,7 +108,10 @@ export class AuthService {
     }
   }
 
-  async signUpLearner(learnerDetails: CreateUserParams) {
+  async signUpLearner(
+    learnerDetails: CreateUserParams,
+    image: Express.Multer.File,
+  ) {
     try {
       const hash = await argon.hash(learnerDetails.password);
       const newUser = this.learnerRepository.create({
@@ -117,16 +120,15 @@ export class AuthService {
         createdAt: new Date(),
       });
 
-      const imgUrl = await this.contentService.getSignedImageUrl(
-        learnerDetails.id,
-        MediaType.IMAGE,
-      );
+      const savedUser = await this.learnerRepository.save(newUser);
 
-      const userFromDB = await this.learnerRepository.save({
-        ...newUser,
-        imgUrl,
+      this.eventEmitter.emit("user.image.upload", {
+        userId: savedUser.id,
+        image,
+        isLecturer: false,
       });
-      return plainToInstance(UserResponseDto, userFromDB);
+
+      return plainToInstance(UserResponseDto, savedUser);
     } catch (error) {
       console.error(error);
       if (error instanceof QueryFailedError) {

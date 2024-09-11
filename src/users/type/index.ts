@@ -11,6 +11,7 @@ export type CreateUserParams = {
   email: string;
   password: string;
   phoneNumber: string;
+  image: File | Buffer | null;
 };
 
 export type UpdateUserParams = {

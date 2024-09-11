@@ -10,7 +10,6 @@ import { LessonsService } from "./lessons/lessons.service";
 import { LessonsModule } from "./lessons/lessons.module";
 import { Lesson } from "./lessons/lesson.entity";
 import { ContentService } from "./content/content.service";
-import { ContentController } from "./content/content.controller";
 import { ContentModule } from "./content/content.module";
 import { LecturersModule } from "./lecturers/lecturers.module";
 import { AuthModule } from "./auth/auth.module";
@@ -25,6 +24,7 @@ import { RoleMiddleware } from "./middleware/role-middleware";
 import { AuthController } from "./auth/auth.controller";
 import { Question } from "./lessons/question.entity";
 import { Answer } from "./lessons/answer.entity";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 const devConfig = { port: 3001 };
 const prodConfig = { port: 4000 };
@@ -34,7 +34,7 @@ const prodConfig = { port: 4000 };
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    LessonsModule,
+    EventEmitterModule.forRoot(),
     TypeOrmModule.forRoot({
       type: "mysql",
       host: "acada-brain-db-dev",
@@ -46,12 +46,13 @@ const prodConfig = { port: 4000 };
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Learner, Lecturer, Lesson, Question, Answer]),
+    LessonsModule,
     ContentModule,
     LearnersModule,
     LecturersModule,
     AuthModule,
   ],
-  controllers: [AppController, LessonsController, ContentController],
+  controllers: [AppController, LessonsController],
   providers: [
     AppService,
     LearnersService,

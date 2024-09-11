@@ -1,13 +1,15 @@
 import { Injectable } from "@nestjs/common";
-import {
-  GetObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 import { ConfigService } from "@nestjs/config";
 import { MediaType } from "./types";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { ONE_HOUR } from "common/constants/time";
+import { OnEvent } from "@nestjs/event-emitter";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Learner } from "src/learners/learner.entity";
+import { Repository } from "typeorm";
+import { Lecturer } from "src/lecturers/lecturer.entity";
 
 @Injectable()
 export class ContentService {
@@ -19,22 +21,45 @@ export class ContentService {
     },
   });
 
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    @InjectRepository(Learner) private learnerRepository: Repository<Learner>,
+    @InjectRepository(Lecturer)
+    private lecturerRepository: Repository<Lecturer>,
+  ) {}
 
-  async upload(mediaType: MediaType, key: string, file: Buffer) {
+  @OnEvent("user.image.upload")
+  async uploadUserImage(payload: {
+    userId: string;
+    image: Express.Multer.File;
+    isLecturer: boolean;
+  }) {
     const bucketName = this.configService.get<string>("AWS_S3_BUCKET_NAME");
-    const folderLocation =
-      mediaType === MediaType.IMAGE
-        ? `profile-pictures/${key}`
-        : `content/${key}`;
-    await this.s3Client.send(
-      new PutObjectCommand({
+    const folderLocation = `profile-pictures/${payload.userId}.png`;
+
+    const upload = new Upload({
+      client: this.s3Client,
+      params: {
         Bucket: bucketName,
         Key: folderLocation,
-        Body: file,
+        Body: payload.image.buffer,
         ACL: "public-read",
-      }),
+      },
+    });
+
+    await upload.done();
+
+    const imgUrl = await this.getSignedImageUrl(
+      payload.userId,
+      MediaType.IMAGE,
     );
+
+    // Update User Entity
+    if (payload.isLecturer) {
+      await this.lecturerRepository.update(payload.userId, { imgUrl });
+    } else {
+      await this.learnerRepository.update(payload.userId, { imgUrl });
+    }
   }
 
   async getSignedImageUrl(key: string, mediaType: MediaType): Promise<string> {

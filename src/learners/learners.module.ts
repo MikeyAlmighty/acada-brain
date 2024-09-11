@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ContentService } from "src/content/content.service";
 import { Learner } from "./learner.entity";
 import { LearnersService } from "./learners.service";
 import { LearnersController } from "./learners.controller";
@@ -15,7 +14,7 @@ import { Lecturer } from "src/lecturers/lecturer.entity";
     Repository<Learner>,
     Repository<Lecturer>,
   ],
-  providers: [LearnersService, ContentService],
+  providers: [LearnersService],
   controllers: [LearnersController],
 })
 export class LearnersModule {}

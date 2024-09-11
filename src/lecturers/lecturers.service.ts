@@ -3,16 +3,13 @@ import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToInstance } from "class-transformer";
 
-import { ContentService } from "src/content/content.service";
 import { UserResponseDto } from "src/users/dto/user-response.dto";
 import { UpdateUserParams } from "src/users/type";
-import { MediaType } from "src/content/types";
 import { Lecturer } from "./lecturer.entity";
 
 @Injectable()
 export class LecturersService {
   constructor(
-    private contentService: ContentService,
     @InjectRepository(Lecturer)
     private lecturerRepository: Repository<Lecturer>,
   ) {}
@@ -23,21 +20,7 @@ export class LecturersService {
   }
 
   async updateLecturer(id: string, updatedLecturerDetails: UpdateUserParams) {
-    await this.contentService.upload(
-      MediaType.IMAGE,
-      id,
-      updatedLecturerDetails.file,
-    );
-
-    const imgUrl = await this.contentService.getSignedImageUrl(
-      id,
-      MediaType.IMAGE,
-    );
-
-    return this.lecturerRepository.update(id, {
-      ...updatedLecturerDetails,
-      imgUrl,
-    });
+    return this.lecturerRepository.update(id, updatedLecturerDetails);
   }
 
   deleteLecturer(id: string) {

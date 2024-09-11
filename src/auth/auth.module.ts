@@ -3,7 +3,6 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { JwtModule } from "@nestjs/jwt";
 
-import { ContentService } from "src/content/content.service";
 import { Learner } from "src/learners/learner.entity";
 import { Lecturer } from "src/lecturers/lecturer.entity";
 import { LearnersModule } from "src/learners/learners.module";
@@ -30,6 +29,6 @@ import { LocalStrategy } from "./strategies/local.strategy";
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, ContentService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}

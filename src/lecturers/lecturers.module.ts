@@ -4,11 +4,10 @@ import { LecturersService } from "./lecturers.service";
 import { Lecturer } from "./lecturer.entity";
 import { Repository } from "typeorm";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ContentService } from "src/content/content.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Lecturer]), Repository<Lecturer>],
   controllers: [LecturersController],
-  providers: [LecturersService, ContentService],
+  providers: [LecturersService],
 })
 export class LecturersModule {}

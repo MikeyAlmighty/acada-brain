@@ -1,11 +1,18 @@
 import { Module } from "@nestjs/common";
 
-import { ContentController } from "./content.controller";
 import { ContentService } from "./content.service";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Learner } from "src/learners/learner.entity";
+import { Lecturer } from "src/lecturers/lecturer.entity";
+import { Repository } from "typeorm";
 
 @Module({
-  imports: [],
-  controllers: [ContentController],
+  imports: [
+    TypeOrmModule.forFeature([Lecturer, Learner]),
+    Repository<Lecturer>,
+    Repository<Learner>,
+  ],
+  controllers: [],
   providers: [ContentService],
 })
 export class ContentModule {}

@@ -3,21 +3,20 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { plainToInstance } from "class-transformer";
 
-import { ContentService } from "src/content/content.service";
-import { MediaType } from "src/content/types";
 import { Learner } from "./learner.entity";
 import { CreateUserParams, UpdateUserParams } from "src/users/type";
 import { UserResponseDto } from "src/users/dto/user-response.dto";
 import { Lecturer } from "src/lecturers/lecturer.entity";
+import { EventEmitter2 } from "@nestjs/event-emitter";
 
 @Injectable()
 export class LearnersService {
   constructor(
-    private contentService: ContentService,
     @InjectRepository(Learner)
     private learnerRepository: Repository<Learner>,
     @InjectRepository(Lecturer)
     private lecturerRepository: Repository<Lecturer>,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async findLearnerById(id: string) {
@@ -34,7 +33,8 @@ export class LearnersService {
   async createLearner(
     lecturerId: string,
     learnerDetails: CreateUserParams,
-  ): Promise<Learner> {
+    image: Express.Multer.File,
+  ) {
     // Find the lecturer
     const lecturer = await this.lecturerRepository.findOne({
       where: { id: lecturerId },
@@ -49,24 +49,17 @@ export class LearnersService {
       lecturer,
     });
 
-    // Save the learner
-    return this.learnerRepository.save(learner);
+    const savedLearner = await this.learnerRepository.save(learner);
+
+    this.eventEmitter.emit("user.image.upload", {
+      userId: savedLearner.id,
+      image,
+      isLecturer: false,
+    });
   }
 
   async updateLearner(id: string, updatedLearnerDetails: UpdateUserParams) {
-    await this.contentService.upload(
-      MediaType.IMAGE,
-      id,
-      updatedLearnerDetails.file,
-    );
-    const imgUrl = await this.contentService.getSignedImageUrl(
-      id,
-      MediaType.IMAGE,
-    );
-    return this.learnerRepository.update(id, {
-      ...updatedLearnerDetails,
-      imgUrl,
-    });
+    return this.learnerRepository.update(id, updatedLearnerDetails);
   }
 
   deleteLearner(id: string) {

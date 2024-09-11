@@ -34,6 +34,9 @@ export class CreateLearnerDto {
   @IsNotEmpty()
   readonly password: string;
 
+  @IsOptional()
+  readonly image: File | Buffer | null | undefined;
+
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
 }
