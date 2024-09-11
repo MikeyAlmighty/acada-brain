@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryColumn,
@@ -40,5 +41,6 @@ export class Lesson {
    * Each Lesson will have multiple learners
    */
   @ManyToMany(() => Learner, (learner) => learner.lesson)
+  @JoinTable()
   learners: Learner[];
 }
