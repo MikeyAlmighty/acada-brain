@@ -8,10 +8,12 @@ import { LessonsController } from "./lessons.controller";
 import { Lesson } from "./lesson.entity";
 import { Question } from "./question.entity";
 import { Answer } from "./answer.entity";
+import { Lecturer } from "src/lecturers/lecturer.entity";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Lesson, Answer, Question]),
+    TypeOrmModule.forFeature([Lecturer, Lesson, Answer, Question]),
+    Repository<Lecturer>,
     Repository<Lesson>,
     Repository<Answer>,
     Repository<Question>,

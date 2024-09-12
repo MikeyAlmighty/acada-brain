@@ -33,4 +33,15 @@ export class LecturersService {
       relations: ["learners"],
     });
   }
+
+  async getLessonsByLecturerId(lecturerId: string) {
+    const lecturer = await this.lecturerRepository.findOne({
+      where: { id: lecturerId },
+      relations: ["lessons"],
+    });
+    if (!lecturer) throw new Error("Lecturer not found");
+
+    // Return all lessons for this lecturer
+    return lecturer.lessons;
+  }
 }

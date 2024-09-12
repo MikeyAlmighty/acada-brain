@@ -1,4 +1,5 @@
 import { Learner } from "src/learners/learner.entity";
+import { Lesson } from "src/lessons/lesson.entity";
 import {
   Column,
   CreateDateColumn,
@@ -43,4 +44,7 @@ export class Lecturer {
 
   @OneToMany(() => Learner, (learner) => learner.lecturer)
   learners: Learner[];
+
+  @OneToMany(() => Lesson, (lesson) => lesson.lecturer)
+  lessons: Lesson[];
 }

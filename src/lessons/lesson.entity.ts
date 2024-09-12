@@ -4,12 +4,14 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryColumn,
 } from "typeorm";
 
 import { Learner } from "src/learners/learner.entity";
 import { Question } from "./question.entity";
+import { Lecturer } from "src/lecturers/lecturer.entity";
 
 @Entity({ name: "lessons" })
 export class Lesson {
@@ -43,4 +45,7 @@ export class Lesson {
   @ManyToMany(() => Learner, (learner) => learner.lesson)
   @JoinTable()
   learners: Learner[];
+
+  @ManyToOne(() => Lecturer, (lecturer) => lecturer.lessons)
+  lecturer: Lecturer;
 }

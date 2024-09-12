@@ -18,6 +18,10 @@ export class CreateLessonDto {
   title: string;
 
   @IsString()
+  @IsNotEmpty()
+  lecturerId: string;
+
+  @IsString()
   readonly description: string;
 
   @IsArray()

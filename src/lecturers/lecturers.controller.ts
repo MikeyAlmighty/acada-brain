@@ -36,9 +36,21 @@ export class LecturersController {
       "id",
       new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
-    id: string,
+    lecturerId: string,
   ) {
-    return this.lecturerService.getLearnersByLecturerId(id);
+    return this.lecturerService.getLearnersByLecturerId(lecturerId);
+  }
+
+  @Get(":id/lessons")
+  @UseGuards(JwtAuthGuard)
+  getLessonsByLecturerId(
+    @Param(
+      "id",
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    lecturerId: string,
+  ) {
+    return this.lecturerService.getLessonsByLecturerId(lecturerId);
   }
 
   @Put(":id")

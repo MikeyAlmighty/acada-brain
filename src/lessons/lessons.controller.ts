@@ -25,10 +25,18 @@ import { validate } from "class-validator";
 export class LessonsController {
   constructor(private lessonService: LessonsService) {}
 
-  @Post()
+  @Post(":id")
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor("video"))
-  async create(@UploadedFile() video: Express.Multer.File, @Body() body) {
+  async create(
+    @UploadedFile() video: Express.Multer.File,
+    @Body() body,
+    @Param(
+      "id",
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    lecturerId: string,
+  ) {
     let parsedQuestions;
     try {
       parsedQuestions = JSON.parse(body.questions);
@@ -38,6 +46,7 @@ export class LessonsController {
 
     const createLessonDto = plainToClass(CreateLessonDto, {
       ...body,
+      lecturerId,
       questions: parsedQuestions,
     });
 
@@ -51,22 +60,66 @@ export class LessonsController {
     return this.lessonService.createLesson(createLessonDto, video);
   }
 
-  @Get()
+  // @Get("/learners/:id")
+  // @UseGuards(JwtAuthGuard)
+  // getLearnersByLessonId(
+  //   @Param(
+  //     "id",
+  //     new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+  //   )
+  //   lessonId: string,
+  // ) {
+  //   return this.lessonService.getLearnersByLessonId(lessonId);
+  // }
+
+  // @Get("lecturer/:id")
+  // @UseGuards(JwtAuthGuard)
+  // getLecturerByLessonId(
+  //   @Param(
+  //     "id",
+  //     new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+  //   )
+  //   lessonId: string,
+  // ) {
+  //   return this.lessonService.getLecturerByLessonId(lessonId);
+  // }
+
+  @Get("learner/:id")
   @UseGuards(JwtAuthGuard)
-  getLessons() {
-    return this.lessonService.getAll();
+  getLessonsByLearnerId(
+    @Param(
+      "id",
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    learnerId: string,
+  ) {
+    return this.lessonService.getLessonsByLearnerId(learnerId);
+  }
+
+  @Get("lecturer/:id")
+  @UseGuards(JwtAuthGuard)
+  getLessonsByLecturerId(
+    @Param(
+      "id",
+      new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    lecturerId: string,
+  ) {
+    return this.lessonService.getLessonsByLecturerId(lecturerId);
   }
 
   @Get(":id")
   @UseGuards(JwtAuthGuard)
-  findLessonById(
+  async findLessonById(
     @Param(
       "id",
       new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
     id: string,
   ) {
-    return this.lessonService.findLessonById(id);
+    const lesson = await this.lessonService.findLessonById(id);
+    console.log("returning lesson: ", lesson);
+    return lesson;
   }
 
   @Put(":id")
