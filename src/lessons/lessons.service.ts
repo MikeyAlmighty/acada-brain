@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
 
 import { CreateLessonDto } from "./dto/create-lesson.dto";
@@ -9,13 +9,17 @@ import { Question } from "./question.entity";
 import { Answer } from "./answer.entity";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { Lecturer } from "src/lecturers/lecturer.entity";
+import { Learner } from "src/learners/learner.entity";
 
 @Injectable()
 export class LessonsService {
   constructor(
     @InjectRepository(Lecturer)
     private lecturerRepository: Repository<Lecturer>,
-    @InjectRepository(Lesson) private lessonRepository: Repository<Lesson>,
+    @InjectRepository(Learner)
+    private learnerRepository: Repository<Learner>,
+    @InjectRepository(Lesson)
+    private lessonRepository: Repository<Lesson>,
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
     @InjectRepository(Answer)
@@ -27,12 +31,19 @@ export class LessonsService {
     lessonDetails: CreateLessonDto,
     video: Express.Multer.File,
   ) {
-    const { id, questions, title, description, lecturerId } = lessonDetails;
+    const { id, questions, title, description, lecturerId, learnerIds } =
+      lessonDetails;
 
     this.eventEmitter.emit("user.video.upload", {
       lessonId: id,
       video,
     });
+
+    const learners = await this.learnerRepository.find({
+      where: { id: In(learnerIds) },
+    });
+
+    console.log("assigning learners: ", learners);
 
     const lecturer = await this.lecturerRepository.findOneBy({
       id: lecturerId,
@@ -43,6 +54,7 @@ export class LessonsService {
       id,
       title,
       lecturer,
+      learners,
       createdAt: new Date(),
       releaseDate: new Date(),
       description,
@@ -140,7 +152,7 @@ export class LessonsService {
     console.log("id: ", id);
     return await this.lessonRepository.findOne({
       where: { id },
-      relations: ["questions"],
+      relations: ["questions", "questions.answers"],
     });
   }
 

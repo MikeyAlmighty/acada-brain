@@ -4,7 +4,6 @@ import { Upload } from "@aws-sdk/lib-storage";
 import { ConfigService } from "@nestjs/config";
 import { MediaType } from "./types";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { ONE_HOUR } from "common/constants/time";
 import { OnEvent } from "@nestjs/event-emitter";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Learner } from "src/learners/learner.entity";
@@ -102,9 +101,7 @@ export class ContentService {
     });
 
     try {
-      const signedUrl = await getSignedUrl(this.s3Client, command, {
-        expiresIn: ONE_HOUR,
-      });
+      const signedUrl = await getSignedUrl(this.s3Client, command);
       return signedUrl;
     } catch (err) {
       throw new Error(`Failed to generate signed URL: ${err.message}`);

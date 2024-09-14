@@ -25,6 +25,9 @@ export class CreateLessonDto {
   readonly description: string;
 
   @IsArray()
+  learnerIds: string[];
+
+  @IsArray()
   @ValidateNested({ each: true })
   @Type(() => QuestionDto)
   questions: QuestionDto[];

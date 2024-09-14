@@ -9,11 +9,13 @@ import { Lesson } from "./lesson.entity";
 import { Question } from "./question.entity";
 import { Answer } from "./answer.entity";
 import { Lecturer } from "src/lecturers/lecturer.entity";
+import { Learner } from "src/learners/learner.entity";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Lecturer, Lesson, Answer, Question]),
+    TypeOrmModule.forFeature([Lecturer, Learner, Lesson, Answer, Question]),
     Repository<Lecturer>,
+    Repository<Learner>,
     Repository<Lesson>,
     Repository<Answer>,
     Repository<Question>,

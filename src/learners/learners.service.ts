@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { plainToInstance } from "class-transformer";
+import * as argon from "argon2";
 
 import { Learner } from "./learner.entity";
 import { CreateUserParams, UpdateUserParams } from "src/users/type";
@@ -43,9 +44,11 @@ export class LearnersService {
       throw new Error("Lecturer not found");
     }
 
+    const hash = await argon.hash(learnerDetails.password);
     // Create a new learner and associate it with the lecturer
     const learner = this.learnerRepository.create({
       ...learnerDetails,
+      password: hash,
       lecturer,
     });
 

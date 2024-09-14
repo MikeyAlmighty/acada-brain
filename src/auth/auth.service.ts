@@ -53,12 +53,14 @@ export class AuthService {
 
   async validateLearner(loginDetails: LoginParams) {
     const { username, password } = loginDetails;
+    console.log("loginDetails: ", loginDetails);
     const userFromDB = await this.learnerRepository.findOneBy({
       username,
     });
     if (!userFromDB) {
       throw new ForbiddenException("Learner Credentials incorrect");
     }
+    console.log("userFromDB: ", userFromDB);
     const doesPasswordMatch = await argon.verify(userFromDB.password, password);
     if (!doesPasswordMatch) {
       throw new ForbiddenException("Learner Credentials incorrect");
@@ -121,6 +123,7 @@ export class AuthService {
       });
 
       const savedUser = await this.learnerRepository.save(newUser);
+      console.log("savedUser", savedUser);
 
       this.eventEmitter.emit("user.image.upload", {
         userId: savedUser.id,

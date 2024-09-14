@@ -39,9 +39,6 @@ export class Lesson {
   @OneToMany(() => Question, (question) => question.lesson)
   questions: Question[];
 
-  /*
-   * Each Lesson will have multiple learners
-   */
   @ManyToMany(() => Learner, (learner) => learner.lesson)
   @JoinTable()
   learners: Learner[];

@@ -52,10 +52,6 @@ export class Learner {
   })
   lecturer: Lecturer;
 
-  /*
-   * A Learner can have Many Lessons
-   *
-   */
   @ManyToMany(() => Lesson, (lesson) => lesson.learners)
   lesson: Lesson[];
 }

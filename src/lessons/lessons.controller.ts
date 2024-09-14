@@ -38,8 +38,10 @@ export class LessonsController {
     lecturerId: string,
   ) {
     let parsedQuestions;
+    let learnerIds;
     try {
       parsedQuestions = JSON.parse(body.questions);
+      learnerIds = JSON.parse(body.learnerIds);
     } catch (error) {
       throw new BadRequestException("Invalid questions format");
     }
@@ -47,6 +49,7 @@ export class LessonsController {
     const createLessonDto = plainToClass(CreateLessonDto, {
       ...body,
       lecturerId,
+      learnerIds,
       questions: parsedQuestions,
     });
 
@@ -57,32 +60,9 @@ export class LessonsController {
       );
     }
 
+    console.log("body: ", body);
     return this.lessonService.createLesson(createLessonDto, video);
   }
-
-  // @Get("/learners/:id")
-  // @UseGuards(JwtAuthGuard)
-  // getLearnersByLessonId(
-  //   @Param(
-  //     "id",
-  //     new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-  //   )
-  //   lessonId: string,
-  // ) {
-  //   return this.lessonService.getLearnersByLessonId(lessonId);
-  // }
-
-  // @Get("lecturer/:id")
-  // @UseGuards(JwtAuthGuard)
-  // getLecturerByLessonId(
-  //   @Param(
-  //     "id",
-  //     new ParseUUIDPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-  //   )
-  //   lessonId: string,
-  // ) {
-  //   return this.lessonService.getLecturerByLessonId(lessonId);
-  // }
 
   @Get("learner/:id")
   @UseGuards(JwtAuthGuard)
@@ -117,9 +97,7 @@ export class LessonsController {
     )
     id: string,
   ) {
-    const lesson = await this.lessonService.findLessonById(id);
-    console.log("returning lesson: ", lesson);
-    return lesson;
+    return await this.lessonService.findLessonById(id);
   }
 
   @Put(":id")
